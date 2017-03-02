@@ -1,0 +1,29 @@
+@import (reference) 'const.less';
+
+.w-link {
+    color: #04b;
+    text-decoration: none;
+    position: relative;
+
+    &_active {
+        color: #000;
+    }
+
+    &_has-icon {
+        padding-left: 20px;
+        .w-link__icon {
+            display: block;
+        }
+    }
+
+    &__icon {
+        display: none;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background: left center no-repeat;
+    }
+}

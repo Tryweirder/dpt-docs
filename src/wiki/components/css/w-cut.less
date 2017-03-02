@@ -1,0 +1,25 @@
+@import (reference) 'const.less';
+
+.platform(default; {
+    .w-cut {
+        &__title {
+            font-size: 11px;
+            margin-bottom: 6px;
+        }
+
+        &__trigger {
+            display: inline-block;
+            cursor: pointer;
+            padding-bottom: 2px;
+            border-bottom: 1px dotted rgba(0, 0, 0, 0.5);
+        }
+
+        &__content {
+            display: none;
+        }
+
+        &_expanded &__content {
+            display: block;
+        }
+    }
+});
