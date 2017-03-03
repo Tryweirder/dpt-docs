@@ -42,7 +42,7 @@ var _yamlJs = require('yaml-js');
 
 var _yamlJs2 = _interopRequireDefault(_yamlJs);
 
-var _file = require('dpt-core/lib/file');
+var _file = require('dpt/lib/file');
 
 var File = _interopRequireWildcard(_file);
 
@@ -50,7 +50,7 @@ var _wDoc = require('../wiki/components/js/w-doc.js');
 
 var _wDoc2 = _interopRequireDefault(_wDoc);
 
-require('dpt-core/lib/vendor/beast');
+require('dpt/lib/vendor/beast');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 

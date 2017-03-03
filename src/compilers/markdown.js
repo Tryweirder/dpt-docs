@@ -9,9 +9,9 @@ import RDS from 'react-dom/server';
 import visit from 'unist-util-visit';
 import yaml from 'yaml-js';
 
-import * as File from 'dpt-core/lib/file';
+import * as File from 'dpt/lib/file';
 import Doc from '../wiki/components/js/w-doc.js';
-import 'dpt-core/lib/vendor/beast';
+import 'dpt/lib/vendor/beast';
 
 function frontMatter(str) {
     const regex = /^---$([\s\S]*?)---(\r?\n)*([\s\S]*)/m;
