@@ -1,0 +1,71 @@
+@import (reference) 'const.less';
+
+.platform(default; {
+    .w-search {
+        position: relative;
+        top: 1px;
+
+        &:not(&_open) &__popup {
+            opacity: 0;
+            margin-top: 17px;
+
+            transition:
+                opacity 0.1s ease-out,
+                margin-top 0.1s ease-out;
+        }
+
+        &:not(&_clickable) &__popup {
+            pointer-events: none;
+        }
+
+        &__popup {
+            box-sizing: border-box;
+            position: absolute;
+            margin-top: 7px;
+            min-width: 100%;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,.4);
+            background: #fff;
+            max-height: 300px;
+            overflow: scroll;
+            width: 150%;
+            z-index: 1000;
+            opacity: 1;
+
+            transition:
+                opacity 0.1s ease-out,
+                margin-top 0.1s ease-out;
+        }
+
+        &__block {
+            box-sizing: border-box;
+            padding: 12px;
+
+            &:not(:first-child) {
+                border-top: 1px solid @color-border;
+            }
+
+            &_selected {
+                background: @color-selection;
+            }
+
+            &:hover {
+                background: @color-selection !important;
+                cursor: pointer;
+            }
+        }
+
+        &__popup:hover &__block_selected {
+            background: #fff;
+        }
+
+        &__block-name {
+            font-size: 16px;
+            color: @color-black;
+        }
+
+        &__block-library {
+            margin-top: 5px;
+            color: @color-gray;
+        }
+    }
+});

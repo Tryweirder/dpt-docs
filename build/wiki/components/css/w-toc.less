@@ -1,0 +1,39 @@
+@import (reference) 'const.less';
+
+.platform(default; {
+    .w-toc {
+        box-sizing: border-box;
+        padding: 0;
+        height: 100%;
+        margin: 0;
+        font-size: 14px;
+
+        &__item {
+            display: block;
+
+            a {
+                display: block;
+                color: #000;
+                text-decoration: none;
+                padding: 6px 0;
+                opacity: 0.7;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            &_depth_2 a {
+                font-weight: bold;
+                text-transform: uppercase;
+                padding-left: 30px;
+                font-size: 13px;
+                margin-top: 10px;
+            }
+
+            &_depth_3 a {
+                padding-left: 50px;
+            }
+        }
+    }
+});

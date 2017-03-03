@@ -1,0 +1,54 @@
+@import (reference) 'const.less';
+
+.platform(default; {
+    .w-pane {
+        background: @wiki-pane-background;
+        color: #666;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        margin: 0;
+        padding: 0;
+        width: 160px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        z-index: 2;
+
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+        .w-link {
+            color: #666;
+
+            &_active, &:hover {
+                color: #000;
+
+                .w-pane__item {
+                    background: #ecece8;
+                }
+            }
+        }
+
+        &__item {
+            padding: 10px 20px;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            &_deprecated {
+                text-decoration: line-through;
+                color: #aaa;
+            }
+        }
+
+        &__item-title {
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+
+        &__item-description {
+            font-family: Verdana, sans-serif;
+            font-size: 11px;
+            opacity: 0.5;
+        }
+    }
+});
