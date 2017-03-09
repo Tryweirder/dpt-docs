@@ -1,6 +1,6 @@
 {
     "name": "dpt-docs",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Documentation viewer for dpt framework",
     "main": "build/index.js",
     "scripts": {
