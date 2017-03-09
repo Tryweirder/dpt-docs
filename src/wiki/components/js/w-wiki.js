@@ -142,7 +142,7 @@ function Head(props) {
             <div {...b('title')}><Link href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
             <ul {...b('menu')}>
                 <li {...b('menu-item')}><Link href='/wiki/libs'>Blocks</Link></li>
-                <li {...b('menu-item')}><Link target="_blank" href='/wiki/projects'>Projects</Link></li>
+                <li {...b('menu-item')}><Link external href='/projects'>Projects</Link></li>
             </ul>
             <ul {...b('menu')}>
                 <li {...b('menu-item')}>
