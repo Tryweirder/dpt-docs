@@ -10,7 +10,7 @@ let Page = React.createClass({
         let link = document.createElement('link');
         link.type = 'image/x-icon';
         link.rel = 'shortcut icon';
-        link.href = '/assets/icons/favicon.png';
+        link.href = '/.core/assets/icons/favicon.png';
         document.getElementsByTagName('head')[0].appendChild(link);
 
         if (this.props.title) {

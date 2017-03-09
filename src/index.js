@@ -44,7 +44,7 @@ function main(app) {
         });
     }
 
-    let indexCss = Path.join(__dirname, '../assets/wiki/serveIndex.css');
+    let indexCss = Path.resolve(__dirname, 'assets/wiki/serveIndex.css');
 
     router.use('/.core/assets', express.static(Path.join(__dirname, 'assets')));
     router.use('/projects', serveIndex('projects/', { 'stylesheet': indexCss }));
