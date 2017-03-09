@@ -12,7 +12,7 @@
         "Artem Shitov <artemshitov@yandex-team.ru>",
         "Anton Shein <adrior@yandex-team.ru>"
     ],
-    "license": "MPL 2.0",
+    "license": "MPL-2.0",
     "devDependencies": {
         "autoprefixer-loader": "^3.2.0",
         "babel-cli": "^6.6.5",
