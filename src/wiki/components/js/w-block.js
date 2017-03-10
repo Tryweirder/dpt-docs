@@ -78,7 +78,7 @@ export default class Doc extends React.Component {
         let libName = this.props.params.libName;
 
         let response = await reqwest({
-            url: `/api/libs/${libName}/${blockName}/snapshot`,
+            url: `/api/wiki/libs/${libName}/${blockName}/snapshot`,
             method: 'POST'
         });
 

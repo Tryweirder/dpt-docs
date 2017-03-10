@@ -5,6 +5,7 @@ import serveIndex from 'serve-index';
 
 import Libraries from './server/api/libraries';
 import Blocks from './server/api/blocks';
+import Snapshots from './server/api/snapshots';
 
 import markdown from './compilers/markdown';
 
@@ -12,6 +13,7 @@ function main(app) {
     let router = express.Router();
     let libraries = Libraries(app);
     let blocks = Blocks(app);
+    let snapshots = Snapshots(app);
 
     app.compilers.push({
         test: /\.md$/,
@@ -27,6 +29,8 @@ function main(app) {
     router.get('/api/wiki/libs/:lib/', libraries.show);
     router.get('/api/wiki/libs/', libraries.index);
     router.post('/api/wiki/libs/', libraries.create);
+
+    router.post('/api/wiki/libs/:library/:block/snapshot', snapshots.create);
 
     router.get('/', (req, res) => res.redirect('/wiki'));
 
