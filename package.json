@@ -12,6 +12,7 @@
         "Artem Shitov <artemshitov@yandex-team.ru>",
         "Anton Shein <adrior@yandex-team.ru>"
     ],
+    "repository": "https://github.com/yandex/dpt-docs",
     "license": "MPL-2.0",
     "devDependencies": {
         "autoprefixer": "^6.3.6",
