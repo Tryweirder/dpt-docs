@@ -123,12 +123,11 @@ function customBlock(remark) {
 }
 
 
-export default async function(opts, path) {
+export default async function(input, {path, ...opts}) {
     let parser = remark.use(customInline).use(customBlock);
     let platform = opts.platform || 'desktop';
     let context = { platform };
-    let str = await File.read(path);
-    let content = parser.parse(handlebars.compile(str)(context));
+    let content = parser.parse(handlebars.compile(input)(context));
     let config = {};
     if (content.children && content.children[0] && content.children[0].type === 'yaml') {
         config = yaml.load(content.children.shift().value);
@@ -180,8 +179,10 @@ export default async function(opts, path) {
     </html>;
 
     return {
-        body: RDS.renderToStaticMarkup(doc),
-        dependencies: [path],
-        mime: 'html'
+        content: {
+            body: RDS.renderToStaticMarkup(doc),
+            mime: 'html'
+        },
+        dependencies: [path]
     };
 }

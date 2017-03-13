@@ -17,7 +17,7 @@ function main(app) {
 
     app.compilers.push({
         test: /\.md$/,
-        compiler: markdown
+        use: markdown
     });
 
     router.get('/api/wiki/config', (req, res) => res.json(app.config));
