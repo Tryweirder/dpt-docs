@@ -152,6 +152,9 @@ export default async function(input, {path, ...opts}) {
         });
     });
 
+    let [, version, blockName, libName] = path.split(Path.sep).reverse();
+    config.imports.push({[`${libName}.${blockName}`]: version});
+
     let doc = <html>
         <head>
             <title>Документация</title>
