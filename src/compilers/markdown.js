@@ -163,15 +163,14 @@ export default async function(input, {path, ...opts}) {
             <script src="/.core/require.js" />
             <script src="/.core/loader.js" />
             <script dangerouslySetInnerHTML={{__html: `
-                Loader.hideContentWhileLoading = false;
                 Loader.showProgressBar = false;
                 Loader.config(${JSON.stringify(config)});
                 var _AST = ${JSON.stringify(content)};
-                Loader.onLoad = function() {
+                Loader.afterLoad(function() {
                     window.ReactDOM.render(React.createElement(Doc, {
                         ast: _AST
                     }), document.querySelector('.renderTarget'));
-                };
+                });
             `}} />
         </head>
         <body>
