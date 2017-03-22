@@ -88,7 +88,7 @@ export default class Wiki extends React.Component {
 
     handleNewLibrarySuccess(response) {
         this.handleNewLibraryFormClose();
-        this.props.history.pushState(null, `/wiki/libs/${response.libname}/`);
+        window.location = `/wiki/libs/${response.libname}/`;
     }
 
     loadDepotConfig() {
