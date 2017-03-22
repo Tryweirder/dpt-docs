@@ -9,8 +9,8 @@ var env = new webpack.DefinePlugin({
 
 module.exports = {
     entry: {
-        wiki: './src/wiki/router.js',
-        'w-doc': './src/wiki/components/js/w-doc.js'
+        wiki: './src/wiki/router.jsx',
+        'w-doc': './src/wiki/blocks/WDoc/WDoc.jsx'
     },
     output: {
         path: __dirname + "/build/bundles/",
