@@ -2,13 +2,15 @@ import React from 'react';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import _ from 'lodash';
 
-import { colors, borders } from '../css/const';
+import { colors, borders } from '../../css/const';
+import tick from './tick-m.svg';
 
 const s = StyleSheet.create({
     menu: {
         display: 'block',
         userSelect: 'none',
-        cursor: 'default'
+        cursor: 'default',
+        padding: '4px 0'
     },
 
     item: {
@@ -17,6 +19,9 @@ const s = StyleSheet.create({
         color: '#000',
         cursor: 'pointer',
         whiteSpace: 'nowrap',
+        fontSize: 13,
+        padding: '0 13px',
+        height: 24,
 
         ':hover': {
             backgroundColor: colors.selection
@@ -27,14 +32,26 @@ const s = StyleSheet.create({
         display: 'block',
 
         ':not(:first-of-type)': {
-            borderTop: borders.basic
+            borderTop: borders.basic,
+            paddingTop: 4
+        },
+
+        ':not(:last-of-type)': {
+            paddingBottom: 4
         }
+    },
+
+    group_titled: {
+        paddingLeft: 33
     },
 
     title: {
         display: 'flex',
         color: '#999',
-        alignItems: 'center'
+        alignItems: 'center',
+        fontSize: 13,
+        padding: '0 13px',
+        height: 24
     },
 
     icon: {
@@ -44,10 +61,17 @@ const s = StyleSheet.create({
     },
 
     tick: {
+        backgroundImage: `url(${tick})`,
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         marginRight: 4,
+        height: 24,
+        width: 13,
         visibility: 'hidden'
+    },
+
+    tick_checked: {
+        visibility: 'visible'
     }
 });
 
@@ -120,7 +144,7 @@ class Group extends React.Component {
     render() {
         return <li className={css(s.group)}>
             {this.props.title && <div className={css(s.title)}>{this.props.title}</div>}
-            <ul>{this.props.children}</ul>
+            <ul className={css(this.props.title && s.group_titled)}>{this.props.children}</ul>
         </li>
     }
 }
@@ -153,7 +177,7 @@ class Item extends React.Component {
     render() {
         let icon = <div className={css(s.icon)} style={{ background: `url(${this.props.icon})` }} />
         return <li className={css(s.item)} onClick={this.handleClick.bind(this)}>
-            <div className={css(s.tick)} />
+            <div className={css(s.tick, this.isChecked() && s.tick_checked)} />
             {this.props.icon && icon}
             {this.props.children || this.props.value}
         </li>;

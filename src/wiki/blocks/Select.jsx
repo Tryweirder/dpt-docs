@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import _ from 'lodash';
 
 import Button from './WButton/WButton';
-import Menu from './Menu';
+import Menu from './Menu/Menu';
 
 const s = StyleSheet.create({
     select: {
