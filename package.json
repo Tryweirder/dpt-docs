@@ -4,9 +4,9 @@
     "description": "Documentation viewer for dpt framework",
     "main": "build/index.js",
     "scripts": {
-        "babel": "./node_modules/.bin/babel src --out-dir build --copy-files",
-        "webpack": "./node_modules/.bin/webpack",
-        "prepublish": "npm run babel && npm run webpack -- -p"
+        "babel": "babel src --out-dir build --copy-files",
+        "webpack": "webpack",
+        "prepublishOnly": "npm run babel && npm run webpack -- -p"
     },
     "contributors": [
         "Artem Shitov <artemshitov@yandex-team.ru>",
