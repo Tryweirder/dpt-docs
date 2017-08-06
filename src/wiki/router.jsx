@@ -8,7 +8,7 @@ import { createHistory } from 'history';
 import Wiki from './blocks/WWiki/WWiki';
 import Libs from './blocks/WLibs/WLibs';
 import Block from './blocks/WBlock/WBlock';
-import Projects from './blocks/WProjects/WProjects';
+import Projects from './blocks/Projects';
 
 function WikiRouter(props) {
     return <Router history={createHistory()}>

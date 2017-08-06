@@ -1,9 +1,11 @@
 import React from 'react';
-import block from 'propmods';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-import './WProjects.less';
-
-let b = block('WProjects');
+const s = StyleSheet.create({
+    projects: {
+        flexGrow: 1
+    }
+});
 
 export default class Projects extends React.Component {
     handleLoad(event) {
@@ -25,6 +27,6 @@ export default class Projects extends React.Component {
         let splat = this.props.params.splat;
         let rnd = Math.round(Math.random() * 10000000);
         let path = '/projects' + (splat ? '/' + splat : '') + '?rnd=' + rnd;
-        return <iframe ref='frame' {...b()} src={path} onLoad={this.handleLoad.bind(this)} />
+        return <iframe ref='frame' className={css(s.projects)} src={path} onLoad={this.handleLoad.bind(this)} />
     }
 }
