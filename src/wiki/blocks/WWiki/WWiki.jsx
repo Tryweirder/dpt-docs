@@ -2,7 +2,7 @@ import React from 'react';
 import block from 'propmods';
 import reqwest from 'reqwest';
 
-import Page from '../WPage/WPage';
+import Page from '../Page';
 import Link from '../WLink/WLink';
 import Loading from '../WLoading/WLoading';
 import Search from '../WSearch/WSearch';
