@@ -5,7 +5,6 @@ import Form from './WForm/WForm';
 import Input from './WInput/WInput';
 import Select from './Select';
 import Button from './WButton/WButton';
-import Result from './WResult/WResult';
 
 export default class NewBlock extends React.Component {
     constructor(props) {
