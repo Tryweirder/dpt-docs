@@ -1,10 +1,55 @@
 import React from 'react';
-import block from 'propmods';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import _ from 'lodash';
 
-import './WMenu.less';
+import { colors, borders } from '../css/const';
 
-let b = block('WMenu');
+const s = StyleSheet.create({
+    menu: {
+        display: 'block',
+        userSelect: 'none',
+        cursor: 'default'
+    },
+
+    item: {
+        display: 'flex',
+        alignItems: 'center',
+        color: '#000',
+        cursor: 'pointer',
+        whiteSpace: 'nowrap',
+
+        ':hover': {
+            backgroundColor: colors.selection
+        }
+    },
+
+    group: {
+        display: 'block',
+
+        ':not(:first-of-type)': {
+            borderTop: borders.basic
+        }
+    },
+
+    title: {
+        display: 'flex',
+        color: '#999',
+        alignItems: 'center'
+    },
+
+    icon: {
+        height: 16,
+        flex: '0 0 16px',
+        marginRight: 4
+    },
+
+    tick: {
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        marginRight: 4,
+        visibility: 'hidden'
+    }
+});
 
 const valueType = React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.string),
@@ -67,14 +112,14 @@ export default class Menu extends React.Component {
     }
 
     render() {
-        return <div {...b(this)}>{ this.props.children }</div>
+        return <div className={css(s.menu)}>{this.props.children}</div>
     }
 }
 
 class Group extends React.Component {
     render() {
-        return <li {...b('group', { hasTitle: !!this.props.title })}>
-            { this.props.title && <div {...b('title')}>{this.props.title}</div> }
+        return <li className={css(s.group)}>
+            {this.props.title && <div className={css(s.title)}>{this.props.title}</div>}
             <ul>{this.props.children}</ul>
         </li>
     }
@@ -106,11 +151,11 @@ class Item extends React.Component {
     }
 
     render() {
-        let icon = <div {...b('icon')} style={{background: `url(${this.props.icon})`}} />
-        return <li {...b('item', this.props, { checked: this.isChecked() })} onClick={this.handleClick.bind(this)}>
-            <div {...b('tick')} />
-            { this.props.icon && icon }
-            { this.props.children || this.props.value }
+        let icon = <div className={css(s.icon)} style={{ background: `url(${this.props.icon})` }} />
+        return <li className={css(s.item)} onClick={this.handleClick.bind(this)}>
+            <div className={css(s.tick)} />
+            {this.props.icon && icon}
+            {this.props.children || this.props.value}
         </li>;
     }
 }
