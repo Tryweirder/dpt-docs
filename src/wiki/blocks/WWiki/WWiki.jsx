@@ -4,7 +4,7 @@ import reqwest from 'reqwest';
 
 import Page from '../Page';
 import Link from '../WLink/WLink';
-import Loading from '../WLoading/WLoading';
+import Spinner from '../Spinner';
 import Search from '../WSearch/WSearch';
 import Modal from '../Modal';
 import NewBlock from '../NewBlock';
@@ -128,7 +128,7 @@ export default class Wiki extends React.Component {
                 </div>
             </Page>;
         } else {
-            return <Loading />;
+            return <Spinner />;
         }
     }
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import block from 'propmods';
 import '../../../vendor/beast';
 
-import Loading from '../WLoading/WLoading';
+import Spinner from '../Spinner';
 import Cut from '../Cut';
 
 if (process.env.BROWSER) {
@@ -66,7 +66,7 @@ export default class Example extends React.Component {
         } else {
             result = <div {...b(this, mods)}>
                 <div {...b('preloader')}>
-                    <Loading />
+                    <Spinner />
                 </div>
                 <div {...b('content') } style={style} ref="example" />
                 <div {...b('code')}>
