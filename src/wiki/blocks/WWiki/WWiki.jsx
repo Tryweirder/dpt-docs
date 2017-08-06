@@ -7,8 +7,8 @@ import Link from '../WLink/WLink';
 import Loading from '../WLoading/WLoading';
 import Search from '../WSearch/WSearch';
 import Modal from '../WModal/WModal';
-import NewBlock from '../WNewBlock/WNewBlock';
-import NewLibrary from '../WNewLibrary/WNewLibrary';
+import NewBlock from '../NewBlock';
+import NewLibrary from '../NewLibrary';
 
 import './WWiki.less';
 

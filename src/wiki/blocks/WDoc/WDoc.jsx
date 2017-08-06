@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import block from 'propmods';
 
 import Example from '../WExample/WExample';
-import Markdown from '../WMarkdown/WMarkdown';
+import Markdown from '../Markdown';
 import TOC from '../TOC';
 
 if (process.env.BROWSER) {

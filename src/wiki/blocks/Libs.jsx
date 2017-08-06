@@ -1,13 +1,18 @@
 import React from 'react';
-import block from 'propmods';
 import reqwest from 'reqwest';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-import Pane from '../WPane/WPane';
-import Link from '../WLink/WLink';
+import Pane from './WPane/WPane';
+import Link from './WLink/WLink';
 
-import './WLibs.less';
-
-let b = block('libs');
+const s = StyleSheet.create({
+    libs: {
+        display: 'flex',
+        alignItems: 'stretch',
+        flexGrow: 1,
+        background: '320px center no-repeat'
+    }
+});
 
 export default class Wiki extends React.Component {
     constructor(props) {
@@ -84,15 +89,15 @@ export default class Wiki extends React.Component {
         let cover = this.context.depotConfig.cover;
 
         if (this.state.loaded) {
-            return <div {...b()} style={{
+            return <div className={css(s.libs)} style={{
                 backgroundImage: !this.props.children && cover && `url(${cover})`
             }}>
-                { libraries.length > 0 && <Pane items={libraries} /> }
-                { blocks.length > 0 && this.props.params.libName && <Pane items={blocks} /> }
-                { this.props.children }
+                {libraries.length > 0 && <Pane items={libraries} />}
+                {blocks.length > 0 && this.props.params.libName && <Pane items={blocks} />}
+                {this.props.children}
             </div>;
         } else {
-            return <div {...b()} />;
+            return <div className={css(s.libs)} />;
         }
     }
 }

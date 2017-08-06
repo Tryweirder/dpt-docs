@@ -1,17 +1,12 @@
 import React from 'react';
-import block from 'propmods';
 import {cookie} from 'cookie_js';
 import reqwest from 'reqwest';
 
-import Form from '../WForm/WForm';
-import Input from '../WInput/WInput';
-import Select from '../Select';
-import Button from '../WButton/WButton';
-import Result from '../WResult/WResult';
-
-import './WNewBlock.less';
-
-let b = block('WNewBlock');
+import Form from './WForm/WForm';
+import Input from './WInput/WInput';
+import Select from './Select';
+import Button from './WButton/WButton';
+import Result from './WResult/WResult';
 
 export default class NewBlock extends React.Component {
     constructor(props) {
@@ -57,9 +52,9 @@ export default class NewBlock extends React.Component {
                 <Select.Item value={l.name} key={l.name} />
             );
 
-            return <div {...b(this)}>
-                <h2 {...b('title')}>Creating block</h2>
-                <Form mix="WNewBlock__form" flash={this.state.flash} onSubmit={this.handleSubmit.bind(this)}>
+            return <div>
+                <h2>Creating block</h2>
+                <Form flash={this.state.flash} onSubmit={this.handleSubmit.bind(this)} style={{marginTop: 20}}>
                     <Form.Fields>
                         <Form.Field label="Block's name">
                             <Input required ref="block" />

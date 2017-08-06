@@ -4,7 +4,7 @@ import block from 'propmods';
 import '../../../vendor/beast';
 
 import Loading from '../WLoading/WLoading';
-import Cut from '../WCut/WCut';
+import Cut from '../Cut';
 
 if (process.env.BROWSER) {
     var cookie = require('cookie_js').cookie;
