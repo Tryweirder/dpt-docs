@@ -1,5 +1,6 @@
 import Path from 'path';
 
+import { StyleSheetServer } from 'aphrodite';
 import handlebars from 'handlebars';
 import remark from 'remark';
 import _ from 'lodash';
@@ -38,15 +39,15 @@ function slug(str) {
     ).replace(/[^a-zа-я\-]/g, '');
 }
 
-handlebars.registerHelper('platform', function(...args) {
+handlebars.registerHelper('platform', function (...args) {
     return _.initial(args).includes(this.platform) ? _.last(args).fn(this) : '';
 });
 
-handlebars.registerHelper('platformNot', function(...args) {
+handlebars.registerHelper('platformNot', function (...args) {
     return !_.initial(args).includes(this.platform) ? _.last(args).fn(this) : '';
 });
 
-handlebars.registerHelper('example', function(opts) {
+handlebars.registerHelper('example', function (opts) {
     opts.hash.lang = 'bml';
     return `:::example${JSON.stringify(opts.hash)}\n<example>${opts.fn(this)}</example>:::`;
 });
@@ -123,7 +124,7 @@ function customBlock(remark) {
 }
 
 
-export default async function(input, {path, ...opts}) {
+export default async function (input, { path, ...opts }) {
     let parser = remark.use(customInline).use(customBlock);
     let platform = opts.platform || 'desktop';
     let context = { platform };
@@ -153,20 +154,27 @@ export default async function(input, {path, ...opts}) {
     });
 
     let [, version, blockName, libName] = path.split(Path.sep).reverse();
-    config.imports.push({[`${libName}.${blockName}`]: version});
+    config.imports.push({ [`${libName}.${blockName}`]: version });
+
+    const { html, css } = StyleSheetServer.renderStatic(() =>
+        RDS.renderToString(<Doc ast={content} />)
+    );
 
     let doc = <html>
         <head>
             <title>Документация</title>
+            <style data-aphrodite dangerouslySetInnerHTML={{ __html: css.content }} />
             <script src="/.core/babel-polyfill.js" />
             <script src="/.core/bundles/w-doc.js" />
             <script src="/.core/require.js" />
             <script src="/.core/loader.js" />
-            <script dangerouslySetInnerHTML={{__html: `
+            <script dangerouslySetInnerHTML={{
+                __html: `
                 Loader.showProgressBar = false;
                 Loader.config(${JSON.stringify(config)});
                 var _AST = ${JSON.stringify(content)};
                 Loader.afterLoad(function() {
+                    // StyleSheet.rehydrate(${JSON.stringify(css.renderedClassNames)});
                     window.ReactDOM.render(React.createElement(Doc, {
                         ast: _AST
                     }), document.querySelector('.renderTarget'));
@@ -174,9 +182,7 @@ export default async function(input, {path, ...opts}) {
             `}} />
         </head>
         <body>
-            <div className="renderTarget" dangerouslySetInnerHTML={{__html:
-                RDS.renderToString(<Doc ast={content} />)
-            }} />
+            <div className="renderTarget" dangerouslySetInnerHTML={{ __html: html }} />
         </body>
     </html>;
 
