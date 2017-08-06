@@ -3,7 +3,7 @@ import block from 'propmods';
 
 import Link from '../WLink/WLink';
 import Button from '../WButton/WButton';
-import Select from '../WSelect/WSelect';
+import Select from '../Select';
 
 import './WBlockHead.less';
 

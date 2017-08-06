@@ -1,13 +1,38 @@
 import React from 'react';
-import block from 'propmods';
+import { StyleSheet, css } from 'aphrodite/no-important';
 import _ from 'lodash';
 
-import Button from '../WButton/WButton';
-import Menu from '../WMenu/WMenu';
+import Button from './WButton/WButton';
+import Menu from './WMenu/WMenu';
 
-import './WSelect.less';
+const s = StyleSheet.create({
+    select: {
+        display: 'inline-block',
+        position: 'relative'
+    },
 
-let b = block('WSelect');
+    popup: {
+        boxSizing: 'border-box',
+        position: 'absolute',
+        marginTop: 17,
+        minWidth: '100%',
+        border: '1px solid rgba(0, 0, 0, 0.06)',
+        boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.4)',
+        background: '#fff',
+        opacity: 0,
+        pointerEvents: 'none',
+        zIndex: 100,
+        maxHeight: 188,
+        overflow: 'scroll',
+        transition: 'opacity 0.1s ease-out, margin-top 0.1s ease-out'
+    },
+
+    popup_open: {
+        opacity: 1,
+        marginTop: 7,
+        pointerEvents: 'auto'
+    }
+});
 
 export default class Select extends React.Component {
     constructor(props) {
@@ -45,12 +70,12 @@ export default class Select extends React.Component {
         if (nextState.open) {
             window.addEventListener('click', this.handleOutsideClick.bind(this));
         } else {
-            window.removeEventListener('click', this.handleOutsideClick, false );
+            window.removeEventListener('click', this.handleOutsideClick, false);
         }
     }
 
     componentWillUnmount() {
-        window.removeEventListener('click', this.handleOutsideClick, false );
+        window.removeEventListener('click', this.handleOutsideClick, false);
     }
 
     handleOutsideClick(event) {
@@ -105,7 +130,7 @@ export default class Select extends React.Component {
     render() {
         let label = this.label();
 
-        return <div {...b(this)} ref="select">
+        return <div className={css(s.select)} ref="select">
             <Button
                 checked={this.state.open}
                 size={this.props.size}
@@ -113,18 +138,19 @@ export default class Select extends React.Component {
                 mode="dropdown"
                 type="button"
                 kind={this.props.kind}
+                style={{ width: '100%' }}
                 onClick={this.handleButtonClick.bind(this)}
             >
                 {label.length > 0 && label || this.props.placeholder}
             </Button>
-            <div {...b('popup')} ref="popup">
+            <div className={css(s.popup, this.state.open && s.popup_open)} ref="popup">
                 <Menu
                     type="select"
                     multiple={this.props.multiple}
                     value={this.value()}
                     onChange={this.handleMenuChange.bind(this)}
                 >
-                    { this.props.children }
+                    {this.props.children}
                 </Menu>
             </div>
         </div>
