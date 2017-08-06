@@ -5,7 +5,7 @@ import './WPage.less';
 
 let b = block('page');
 
-let Page = React.createClass({
+export default class Page extends React.Component {
     componentWillMount() {
         let link = document.createElement('link');
         link.type = 'image/x-icon';
@@ -16,13 +16,11 @@ let Page = React.createClass({
         if (this.props.title) {
             document.title = this.props.title;
         }
-    },
+    }
 
     render() {
-        return <div {...b()} {...this.props}>
+        return <div {...b() } {...this.props}>
             {this.props.children}
         </div>
     }
-});
-
-export default Page;
+}
