@@ -1,14 +1,26 @@
 import React from 'react';
-import block from 'propmods';
 import reqwest from 'reqwest';
+import {StyleSheet, css} from 'aphrodite/no-important';
 
-import Head from '../WBlockHead/WBlockHead';
+import Head from './WBlockHead/WBlockHead';
 
-import './WBlock.less';
+const s = StyleSheet.create({
+    block: {
+        display: 'flex',
+        flexGrow: 1,
+        flexDirection: 'column',
+        position: 'relative',
+        background: '#fff'
+    },
 
-let b = block('WBlock');
+    content: {
+        flexGrow: 1,
+        width: '100%',
+        border: 'none'
+    }
+});
 
-export default class Doc extends React.Component {
+export default class Block extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -108,12 +120,7 @@ export default class Doc extends React.Component {
             let platform = this.props.params.platform || 'desktop';
             let src = `/blocks/${this.state.library}/${this.state.name}/${version}/${this.state.name}.md?platform=${platform}${this.props.location.hash}`;
 
-            let deprecationMessage = this.state.deprecated ?
-                this.state.deprecated.message ||
-                    'Block is depricated'
-                : null;
-
-            return <div {...b({deprecated: this.state.deprecated !== void 0})}>
+            return <div className={css(s.block)}>
                 <Head
                     path={this.state.path}
                     owner={this.state.owner}
@@ -126,14 +133,7 @@ export default class Doc extends React.Component {
                     onSnapshot={this.handleSnapshotClick.bind(this)}
                     docSrc={src}
                 />
-                {
-                    this.state.deprecated &&
-                    <div
-                        {...b('deprecation-message')}
-                        dangerouslySetInnerHTML={{__html: deprecationMessage}}
-                    />
-                }
-                <iframe {...b('content')} src={src} onLoad={this.handleLoad.bind(this)} />
+                <iframe className={css(s.content)} src={src} onLoad={this.handleLoad.bind(this)} />
             </div>
         } else {
             return <div></div>

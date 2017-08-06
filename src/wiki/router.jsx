@@ -7,7 +7,7 @@ import { createHistory } from 'history';
 
 import Wiki from './blocks/WWiki/WWiki';
 import Libs from './blocks/Libs';
-import Block from './blocks/WBlock/WBlock';
+import Block from './blocks/Block';
 import Projects from './blocks/Projects';
 
 function WikiRouter(props) {
