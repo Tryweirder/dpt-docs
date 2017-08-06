@@ -22,11 +22,15 @@ module.exports = {
     module: {
         loaders: [{
                 test: /\.jsx?$/,
-                loader: 'babel'
+                loader: 'babel-loader'
             },
             {
                 test: /\.less$/,
-                loader: 'style?singleton!css!autoprefixer!less'
+                loader: 'style-loader?singleton!css-loader!autoprefixer-loader!less-loader'
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-url-loader?stripdeclarations'
             }
         ]
     },
