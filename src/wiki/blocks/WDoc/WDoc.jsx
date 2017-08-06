@@ -5,7 +5,7 @@ import block from 'propmods';
 
 import Example from '../WExample/WExample';
 import Markdown from '../WMarkdown/WMarkdown';
-import TOC from '../WToc/WToc';
+import TOC from '../TOC';
 
 if (process.env.BROWSER) {
     var cookie = require('cookie_js').cookie;
