@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -25,7 +26,7 @@ export default class Wiki extends React.Component {
     }
 
     static contextTypes = {
-        depotConfig: React.PropTypes.object
+        depotConfig: PropTypes.object
     }
 
     loadLibrariesList() {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -100,8 +101,8 @@ export default class Wiki extends React.Component {
     }
 
     static childContextTypes = {
-        isLocal: React.PropTypes.bool,
-        depotConfig: React.PropTypes.object
+        isLocal: PropTypes.bool,
+        depotConfig: PropTypes.object
     };
 
     getChildContext() {

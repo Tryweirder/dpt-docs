@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 class Renderer {
@@ -163,8 +164,8 @@ class Renderer {
 
 export default class Markdown extends React.Component {
     static propTypes = {
-        ast: React.PropTypes.object.isRequired,
-        renderer: React.PropTypes.instanceOf(Renderer).isRequired
+        ast: PropTypes.object.isRequired,
+        renderer: PropTypes.instanceOf(Renderer).isRequired
     };
 
     static defaultProps = {

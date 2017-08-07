@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import _ from 'lodash';
 
@@ -75,9 +76,9 @@ const s = StyleSheet.create({
     }
 });
 
-const valueType = React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.string),
-    React.PropTypes.string
+const valueType = PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.string
 ]);
 
 export default class Menu extends React.Component {
@@ -90,16 +91,16 @@ export default class Menu extends React.Component {
 
     static childContextTypes = {
         menuValue: valueType,
-        handleItemClick: React.PropTypes.func
+        handleItemClick: PropTypes.func
     };
 
     static propTypes = {
-        size: React.PropTypes.oneOf(['M']),
-        type: React.PropTypes.oneOf(['normal', 'select']),
-        multiple: React.PropTypes.bool,
+        size: PropTypes.oneOf(['M']),
+        type: PropTypes.oneOf(['normal', 'select']),
+        multiple: PropTypes.bool,
         defaultValue: valueType,
         value: valueType,
-        onChange: React.PropTypes.func
+        onChange: PropTypes.func
     };
 
     static defaultProps = {
@@ -153,12 +154,12 @@ Menu.Group = Group;
 
 class Item extends React.Component {
     static propTypes = {
-        checked: React.PropTypes.bool
+        checked: PropTypes.bool
     };
 
     static contextTypes = {
         menuValue: valueType,
-        handleItemClick: React.PropTypes.func
+        handleItemClick: PropTypes.func
     };
 
     handleClick() {

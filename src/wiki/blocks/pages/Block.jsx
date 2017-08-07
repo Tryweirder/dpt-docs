@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import reqwest from 'reqwest';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
@@ -223,8 +224,8 @@ function Head(props, context) {
 }
 
 Head.contextTypes = {
-    isLocal: React.PropTypes.bool,
-    depotConfig: React.PropTypes.object
+    isLocal: PropTypes.bool,
+    depotConfig: PropTypes.object
 };
 
 function Group(props) {
@@ -288,5 +289,5 @@ function Versions(props, context) {
 }
 
 Versions.contextTypes = {
-    isLocal: React.PropTypes.bool
+    isLocal: PropTypes.bool
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -30,8 +31,8 @@ const s = StyleSheet.create({
 
 export default class Link extends React.Component {
     static propTypes = {
-        href: React.PropTypes.string.isRequired,
-        mixClassName: React.PropTypes.object
+        href: PropTypes.string.isRequired,
+        mixClassName: PropTypes.object
     };
 
     isExternal() {
