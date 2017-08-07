@@ -3,7 +3,7 @@ import {cookie} from 'cookie_js';
 import reqwest from 'reqwest';
 
 import Form from '../Form';
-import Input from '../WInput/WInput';
+import Input from '../Input';
 import Select from '../Select';
 import Button from '../WButton/WButton';
 

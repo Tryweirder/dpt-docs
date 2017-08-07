@@ -7,7 +7,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 
 import { colors, borders } from '../css/const';
 
-import Input from './WInput/WInput';
+import Input from './Input';
 import Link from './Link';
 
 const s = StyleSheet.create({
@@ -248,7 +248,7 @@ export default class Search extends React.Component {
         return <div className={css(s.search)}>
             <Input
                 size="S"
-                kind={this.state.focused ? 'normal' : 'pseudo-head'}
+                kind={this.state.focused ? 'normal' : 'head'}
                 value={this.state.value}
                 placeholder={`Search ${shortcut}`}
                 onChange={this.handleChange.bind(this)}

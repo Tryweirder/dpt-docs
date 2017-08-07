@@ -5,5 +5,6 @@ export const colors = {
 
 export const borders = {
     basic: '1px solid rgba(0, 0, 0, 0.1)',
+    button: '1px solid rgba(0, 0, 0, 0.2)',
     light: '1px solid rgba(0, 0, 0, 0.06)'
 };
