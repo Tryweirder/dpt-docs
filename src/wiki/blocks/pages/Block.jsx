@@ -2,7 +2,11 @@ import React from 'react';
 import reqwest from 'reqwest';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
-import Head from '../WBlockHead/WBlockHead';
+import { colors } from '../../css/const';
+
+import Link from '../WLink/WLink';
+import Button from '../WButton/WButton';
+import Select from '../Select';
 
 const s = StyleSheet.create({
     block: {
@@ -17,6 +21,40 @@ const s = StyleSheet.create({
         flexGrow: 1,
         width: '100%',
         border: 'none'
+    },
+
+    head: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flex: '0 0 40px',
+        color: '#666',
+        background: colors.pane,
+        padding: '0 20px 2px',
+        boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)',
+        zIndex: 1,
+        height: 40
+    },
+
+    group: {
+        ':not(:first-of-type)': {
+            marginLeft: 40
+        },
+
+        ':last-child': {
+            flexGrow: 1,
+            textAlign: 'right'
+        }
+    },
+
+    label: {
+        display: 'inline-block',
+        marginRight: 7
+    },
+
+    snapshot: {
+        display: 'inline-block',
+        marginLeft: 15
     }
 });
 
@@ -140,3 +178,115 @@ export default class Block extends React.Component {
         }
     }
 }
+
+function Head(props, context) {
+    let githubUrl;
+
+    if (context.depotConfig.repository) {
+        githubUrl = context.depotConfig.repository + '/tree/master' +
+            props.path + '/' + props.currentVersion;
+    }
+
+    return <div className={css(s.head)}>
+        <Group>
+            <Owner username={props.owner} />
+        </Group>
+
+        <Group>
+            <Platforms
+                onChange={props.onPlatformChange}
+                current={props.currentPlatform}
+                platforms={props.platforms}
+            />
+        </Group>
+
+        <Group>
+            <Versions
+                versions={props.versions}
+                current={props.currentVersion}
+                onChange={props.onVersionChange}
+                onSnapshotClick={props.onSnapshot}
+            />
+        </Group>
+
+        {githubUrl &&
+            <Group>
+                <Link icon="/.core/assets/icons/favicon-github.png" href={githubUrl}>Show the code</Link>
+            </Group>
+        }
+
+        <Group align="right">
+            <Button external={true} icon="/.core/assets/icons/maximize.svg" href={props.docSrc} kind="clear" size="S" />
+        </Group>
+
+    </div>;
+}
+
+Head.contextTypes = {
+    isLocal: React.PropTypes.bool,
+    depotConfig: React.PropTypes.object
+};
+
+function Group(props) {
+    return <div className={css(s.group)}>
+        {props.children}
+    </div>;
+}
+
+function Owner(props) {
+    return <div className={css(s.owner)}>
+        {props.username}
+    </div>;
+}
+
+function Platforms(props) {
+    let defaultPlatforms = ['desktop', 'tablet', 'mobile'];
+    let platforms = props.platforms.only || defaultPlatforms;
+
+    let options = platforms.map(p => {
+        return <Select.Item value={p} key={p}>
+            <span className={css(s.platform)}>{p}</span>
+        </Select.Item>;
+    });
+
+    return <div className={css(s.platforms)}>
+        <label className={css(s.label)}>
+            Platform:
+        </label>
+        <Select size="S" value={props.current} onChange={props.onChange}>
+            {options}
+        </Select>
+    </div>;
+}
+
+function Versions(props, context) {
+    let hasNext = props.versions.includes('next');
+    let snapshotButtonProps = {
+        disabled: !hasNext,
+        onClick: props.onSnapshotClick,
+        size: 'S',
+        title: !hasNext ? 'Block dosn\'t have next version' : null
+    };
+
+    let snapshotButton = <div className={css(s.snapshot)}>
+        <Button {...snapshotButtonProps}>Freeze next version</Button>
+    </div>;
+
+    return <div className={css(s.versions)}>
+        <label className={css(s.label)}>
+            Version:
+        </label>
+        <Select size="S" value={props.current} onChange={props.onChange}>
+            {props.versions.map(v =>
+                <Select.Item value={v} key={v}>
+                    {v}
+                </Select.Item>
+            )}
+        </Select>
+        {context.isLocal && snapshotButton}
+    </div>;
+}
+
+Versions.contextTypes = {
+    isLocal: React.PropTypes.bool
+};
