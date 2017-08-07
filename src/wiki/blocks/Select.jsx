@@ -68,7 +68,7 @@ export default class Select extends React.Component {
 
     componentWillUpdate(nextProps, nextState) {
         if (nextState.open) {
-            window.addEventListener('click', this.handleOutsideClick.bind(this));
+            window.addEventListener('click', this.handleOutsideClick);
         } else {
             window.removeEventListener('click', this.handleOutsideClick, false);
         }
@@ -78,17 +78,17 @@ export default class Select extends React.Component {
         window.removeEventListener('click', this.handleOutsideClick, false);
     }
 
-    handleOutsideClick(event) {
+    handleOutsideClick = event => {
         if (event.target === window || this.refs.select && !this.refs.select.contains(event.target)) {
             this.setState({ open: false });
         }
     }
 
-    handleButtonClick() {
+    handleButtonClick = () => {
         this.setState({ open: !this.state.open });
     }
 
-    handleMenuChange(value) {
+    handleMenuChange = value => {
         let nextState = {
             open: this.props.multiple,
             value: this.props.value === void 0 ? value : void 0
@@ -139,7 +139,7 @@ export default class Select extends React.Component {
                 type="button"
                 kind={this.props.kind}
                 style={{ width: '100%' }}
-                onClick={this.handleButtonClick.bind(this)}
+                onClick={this.handleButtonClick}
             >
                 {label.length > 0 && label || this.props.placeholder}
             </Button>
@@ -148,7 +148,7 @@ export default class Select extends React.Component {
                     type="select"
                     multiple={this.props.multiple}
                     value={this.value()}
-                    onChange={this.handleMenuChange.bind(this)}
+                    onChange={this.handleMenuChange}
                 >
                     {this.props.children}
                 </Menu>

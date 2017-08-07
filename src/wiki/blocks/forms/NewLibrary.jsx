@@ -25,7 +25,7 @@ export default class NewBlock extends React.Component {
         });
     }
 
-    async handleSubmit(event) {
+    handleSubmit = async event => {
         event.preventDefault();
         let form = {};
         ['libname', 'libtitle'].forEach(ref => form[ref] = this.refs[ref].value());
@@ -51,7 +51,7 @@ export default class NewBlock extends React.Component {
 
             return <div>
                 <h2>Creating library</h2>
-                <Form flash={this.state.flash} onSubmit={this.handleSubmit.bind(this)} style={{marginTop: 20}}>
+                <Form flash={this.state.flash} onSubmit={this.handleSubmit} style={{marginTop: 20}}>
                     <Form.Fields>
                         <Form.Field label="Lib name">
                             <Input required ref="libname" />

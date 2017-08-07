@@ -29,12 +29,12 @@ export default class Button extends React.Component {
         }
     }
 
-    handleBlur() {
+    handleBlur = () => {
         this.setState({ clicked: false });
         if (this.props.onBlur) this.props.onBlur();
     }
 
-    handleClick(event) {
+    handleClick = event => {
         if (this.props.onClick) {
             this.props.onClick(event);
         }
@@ -58,8 +58,8 @@ export default class Button extends React.Component {
             {
                 ...b(this, { iconOnly: this.props.icon && this.props.children === void 0 }),
                 ...this.props,
-                onClick: this.handleClick.bind(this),
-                onBlur: this.handleBlur.bind(this),
+                onClick: this.handleClick,
+                onBlur: this.handleBlur,
                 ref: 'button'
             },
             ( this.props.icon &&

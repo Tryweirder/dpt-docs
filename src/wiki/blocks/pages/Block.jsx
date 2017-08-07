@@ -101,15 +101,15 @@ export default class Block extends React.Component {
         );
     }
 
-    handleVersionChange(nextVersion) {
+    handleVersionChange = nextVersion => {
         this.goToVersion(nextVersion);
     }
 
-    handlePlatformChange(nextPlatform) {
+    handlePlatformChange = nextPlatform => {
         this.goToVersion(null, nextPlatform);
     }
 
-    handleLoad(event) {
+    handleLoad = event => {
         event.target.contentWindow.addEventListener('keydown', (event) => {
             window.dispatchEvent(new KeyboardEvent('keydown', event))
         });
@@ -165,14 +165,14 @@ export default class Block extends React.Component {
                     owner={this.state.owner}
                     currentPlatform={this.props.params.platform}
                     platforms={this.state.platforms}
-                    onPlatformChange={this.handlePlatformChange.bind(this)}
+                    onPlatformChange={this.handlePlatformChange}
                     versions={this.state.versions}
                     currentVersion={this.props.params.version}
-                    onVersionChange={this.handleVersionChange.bind(this)}
-                    onSnapshot={this.handleSnapshotClick.bind(this)}
+                    onVersionChange={this.handleVersionChange}
+                    onSnapshot={this.handleSnapshotClick}
                     docSrc={src}
                 />
-                <iframe className={css(s.content)} src={src} onLoad={this.handleLoad.bind(this)} />
+                <iframe className={css(s.content)} src={src} onLoad={this.handleLoad} />
             </div>
         } else {
             return <div></div>

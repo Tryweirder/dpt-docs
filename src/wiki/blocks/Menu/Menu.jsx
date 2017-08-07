@@ -112,7 +112,7 @@ export default class Menu extends React.Component {
     getChildContext() {
         return {
             menuValue: this.state.value || this.props.value,
-            handleItemClick: this.handleItemClick.bind(this)
+            handleItemClick: this.handleItemClick
         };
     }
 
@@ -122,7 +122,7 @@ export default class Menu extends React.Component {
         }
     }
 
-    handleItemClick(itemValue, itemChildren, wasChecked) {
+    handleItemClick = (itemValue, itemChildren, wasChecked) => {
         let newValue;
         if (this.props.multiple) {
             if (wasChecked) {
@@ -162,7 +162,7 @@ class Item extends React.Component {
         handleItemClick: PropTypes.func
     };
 
-    handleClick() {
+    handleClick = () => {
         let fn = this.props.onClick || this.context.handleItemClick;
         if (fn) {
             fn(this.props.value, this.props.children, this.props.checked);
@@ -177,7 +177,7 @@ class Item extends React.Component {
 
     render() {
         let icon = <div className={css(s.icon)} style={{ background: `url(${this.props.icon})` }} />
-        return <li className={css(s.item)} onClick={this.handleClick.bind(this)}>
+        return <li className={css(s.item)} onClick={this.handleClick}>
             <div className={css(s.tick, this.isChecked() && s.tick_checked)} />
             {this.props.icon && icon}
             {this.props.children || this.props.value}

@@ -146,12 +146,16 @@ export default class Search extends React.Component {
         }
     }
 
-    handleBlur = event => {
+    handleBlur = () => {
         this.close();
     }
 
     handleChange = event => {
         this.changeValue(event.target.value);
+    }
+
+    handleFocus = () => {
+        this.open();
     }
 
     handleKeyPress = event => {
@@ -251,10 +255,10 @@ export default class Search extends React.Component {
                 kind={this.state.focused ? 'normal' : 'head'}
                 value={this.state.value}
                 placeholder={`Search ${shortcut}`}
-                onChange={this.handleChange.bind(this)}
-                onKeyDown={this.handleKeyPress.bind(this)}
-                onFocus={this.open.bind(this)}
-                onBlur={this.handleBlur.bind(this)}
+                onChange={this.handleChange}
+                onKeyDown={this.handleKeyPress}
+                onFocus={this.handleFocus}
+                onBlur={this.handleBlur}
                 ref={input => this.input = input}
                 style={{ borderRadius: 2 }}
             />

@@ -8,7 +8,7 @@ const s = StyleSheet.create({
 });
 
 export default class Projects extends React.Component {
-    handleLoad(event) {
+    handleLoad = event => {
         let routePath = '/wiki';
         let projectPath = event.target.contentWindow.location.pathname;
 
@@ -27,6 +27,6 @@ export default class Projects extends React.Component {
         let splat = this.props.params.splat;
         let rnd = Math.round(Math.random() * 10000000);
         let path = '/projects' + (splat ? '/' + splat : '') + '?rnd=' + rnd;
-        return <iframe ref='frame' className={css(s.projects)} src={path} onLoad={this.handleLoad.bind(this)} />
+        return <iframe ref='frame' className={css(s.projects)} src={path} onLoad={this.handleLoad} />
     }
 }
