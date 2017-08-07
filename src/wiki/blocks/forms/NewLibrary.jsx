@@ -1,11 +1,10 @@
 import React from 'react';
-import {cookie} from 'cookie_js';
 import reqwest from 'reqwest';
 
-import Form from './WForm/WForm';
-import Input from './WInput/WInput';
-import Select from './Select';
-import Button from './WButton/WButton';
+import Form from '../WForm/WForm';
+import Input from '../WInput/WInput';
+import Select from '../Select';
+import Button from '../WButton/WButton';
 
 export default class NewBlock extends React.Component {
     constructor(props) {
@@ -29,10 +28,9 @@ export default class NewBlock extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         let form = {};
-        ['block', 'title', 'lib', 'owner'].forEach(ref => form[ref] = this.refs[ref].value());
-        cookie.set('username', form.owner, {path: '/', expires: 99999});
+        ['libname', 'libtitle'].forEach(ref => form[ref] = this.refs[ref].value());
         let response = await reqwest({
-            url: '/api/wiki/blocks/',
+            url: '/api/wiki/libs/',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(form)
@@ -52,22 +50,14 @@ export default class NewBlock extends React.Component {
             );
 
             return <div>
-                <h2>Creating block</h2>
+                <h2>Creating library</h2>
                 <Form flash={this.state.flash} onSubmit={this.handleSubmit.bind(this)} style={{marginTop: 20}}>
                     <Form.Fields>
-                        <Form.Field label="Block's name">
-                            <Input required ref="block" />
+                        <Form.Field label="Lib name">
+                            <Input required ref="libname" />
                         </Form.Field>
                         <Form.Field label="Description">
-                            <Input required ref="title" />
-                        </Form.Field>
-                        <Form.Field label="Library">
-                            <Select defaultValue={this.props.currentLibrary} ref="lib">
-                                {libraries}
-                            </Select>
-                        </Form.Field>
-                        <Form.Field label="Maintainer">
-                            <Input defaultValue={cookie.get('username')} ref="owner" />
+                            <Input required ref="libtitle" />
                         </Form.Field>
                     </Form.Fields>
                     <Form.Bottom>

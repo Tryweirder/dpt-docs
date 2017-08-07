@@ -6,9 +6,9 @@ import { Router, Route, Redirect } from 'react-router';
 import { createHistory } from 'history';
 
 import Wiki from './blocks/WWiki/WWiki';
-import Libs from './blocks/Libs';
-import Block from './blocks/Block';
-import Projects from './blocks/Projects';
+import Libs from './blocks/pages/Libs';
+import Block from './blocks/pages/Block';
+import Projects from './blocks/pages/Projects';
 
 function WikiRouter(props) {
     return <Router history={createHistory()}>

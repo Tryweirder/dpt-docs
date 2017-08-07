@@ -2,13 +2,13 @@ import React from 'react';
 import block from 'propmods';
 import reqwest from 'reqwest';
 
-import Page from '../Page';
+import Page from '../pages/Page';
 import Link from '../WLink/WLink';
 import Spinner from '../Spinner';
 import Search from '../WSearch/WSearch';
 import Modal from '../Modal';
-import NewBlock from '../NewBlock';
-import NewLibrary from '../NewLibrary';
+import NewBlock from '../forms/NewBlock';
+import NewLibrary from '../forms/NewLibrary';
 
 import './WWiki.less';
 

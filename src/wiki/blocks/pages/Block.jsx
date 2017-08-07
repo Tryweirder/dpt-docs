@@ -2,7 +2,7 @@ import React from 'react';
 import reqwest from 'reqwest';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
-import Head from './WBlockHead/WBlockHead';
+import Head from '../WBlockHead/WBlockHead';
 
 const s = StyleSheet.create({
     block: {
