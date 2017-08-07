@@ -6,7 +6,7 @@ import _ from 'lodash';
 import reqwest from 'reqwest';
 
 import Input from '../WInput/WInput';
-import Link from '../WLink/WLink';
+import Link from '../Link';
 
 import './WSearch.less';
 

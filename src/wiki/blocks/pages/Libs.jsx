@@ -3,7 +3,7 @@ import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
 import Pane from '../Pane';
-import Link from '../WLink/WLink';
+import Link from '../Link';
 
 const s = StyleSheet.create({
     libs: {

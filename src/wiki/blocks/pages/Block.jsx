@@ -4,7 +4,7 @@ import {StyleSheet, css} from 'aphrodite/no-important';
 
 import { colors } from '../../css/const';
 
-import Link from '../WLink/WLink';
+import Link from '../Link';
 import Button from '../WButton/WButton';
 import Select from '../Select';
 

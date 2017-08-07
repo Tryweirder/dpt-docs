@@ -3,7 +3,7 @@ import block from 'propmods';
 import reqwest from 'reqwest';
 
 import Page from '../pages/Page';
-import Link from '../WLink/WLink';
+import Link from '../Link';
 import Spinner from '../Spinner';
 import Search from '../WSearch/WSearch';
 import Modal from '../Modal';

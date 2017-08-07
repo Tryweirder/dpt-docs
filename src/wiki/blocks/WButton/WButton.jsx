@@ -1,7 +1,7 @@
 import React from 'react';
 import block from 'propmods';
 
-import Link from '../WLink/WLink';
+import Link from '../Link';
 
 import './WButton.less';
 

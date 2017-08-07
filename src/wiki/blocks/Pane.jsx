@@ -4,7 +4,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import { colors } from '../css/const';
 import { hexa } from '../css/util';
 
-import Link from './WLink/WLink';
+import Link from './Link';
 
 const s = StyleSheet.create({
     pane: {
@@ -32,6 +32,18 @@ const s = StyleSheet.create({
 
     item_active: {
         background: '#ecece8'
+    },
+
+    link: {
+        color: '#666',
+
+        ':hover': {
+            color: '#000'
+        }
+    },
+
+    link_active: {
+        color: '#000 !important'
     },
 
     title: {
@@ -67,7 +79,7 @@ Pane.Item = function (props) {
     </li>;
 
     if (props.href) {
-        return <Link href={props.href}>{item}</Link>;
+        return <Link href={props.href} mixClassName={s.link} activeClassName={css(s.link_active)}>{item}</Link>;
     } else {
         return item;
     }
