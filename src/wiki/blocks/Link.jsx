@@ -48,12 +48,12 @@ export default class Link extends React.Component {
 
         if (this.isExternal()) {
             return <a className={cn} {...this.props}>
-                {this.props.icon && <div {...b('icon') } style={style} />}
+                {this.props.icon && <div className={css(s.icon)} style={style} />}
                 {this.props.children}
             </a>
         } else {
             return <RouterLink className={cn} activeClassName={css(s.link_active)} to={this.props.href} {...this.props}>
-                {this.props.icon && <div {...b('icon') } style={style} />}
+                {this.props.icon && <div className={css(s.icon)} style={style} />}
                 {this.props.children}
             </RouterLink>
         }
