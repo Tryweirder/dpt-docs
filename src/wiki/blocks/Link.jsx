@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
 const s = StyleSheet.create({
@@ -51,12 +51,12 @@ export default class Link extends React.Component {
             return <a className={cn} {...this.props}>
                 {this.props.icon && <div className={css(s.icon)} style={style} />}
                 {this.props.children}
-            </a>
+            </a>;
         } else {
-            return <RouterLink className={cn} activeClassName={css(s.link_active)} to={this.props.href} {...this.props}>
+            return <NavLink className={cn} activeClassName={css(s.link_active)} to={this.props.href} {...this.props}>
                 {this.props.icon && <div className={css(s.icon)} style={style} />}
                 {this.props.children}
-            </RouterLink>
+            </NavLink>;
         }
     }
 }

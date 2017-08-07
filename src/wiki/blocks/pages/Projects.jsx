@@ -17,14 +17,14 @@ export default class Projects extends React.Component {
 
     shouldComponentUpdate(nextProps) {
         let currentProjectPath = this.refs.frame.contentWindow.location.pathname;
-        let splat = this.props.params.splat;
-        let nextSplat = nextProps.params.splat;
+        let splat = this.props.match.params.splat;
+        let nextSplat = nextProps.match.params.splat;
         let nextProjectPath = '/projects' + (nextSplat ? '/' + nextSplat : '');
         return currentProjectPath !== nextProjectPath;
     }
 
     render() {
-        let splat = this.props.params.splat;
+        let splat = this.props.match.params.splat;
         let rnd = Math.round(Math.random() * 10000000);
         let path = '/projects' + (splat ? '/' + splat : '') + '?rnd=' + rnd;
         return <iframe ref='frame' className={css(s.projects)} src={path} onLoad={this.handleLoad} />

@@ -66,18 +66,18 @@ export default class Block extends React.Component {
     }
 
     async loadBlockInfo(props) {
-        let blockName = props.params.blockName;
-        let libName = props.params.libName;
+        let blockName = props.match.params.blockName;
+        let libName = props.match.params.libName;
 
         let response = await API.blocks.get(libName, blockName);
 
-        let platform = props.params.platform;
+        let platform = props.match.params.platform;
 
         if (platform === void 0) {
             platform = response.platforms.default || (response.platforms.only || [])[0] || 'desktop';
         }
 
-        if (props.params.version === void 0) {
+        if (props.match.params.version === void 0) {
             this.goToVersion(response.current, platform);
         }
 
@@ -88,14 +88,14 @@ export default class Block extends React.Component {
     }
 
     goToVersion(nextVersion, nextPlatform) {
-        let libName = this.props.params.libName;
-        let blockName = this.props.params.blockName;
-        let version = nextVersion || this.props.params.version;
-        let platform = nextPlatform || this.props.params.platform || 'desktop';
+        let libName = this.props.match.params.libName;
+        let blockName = this.props.match.params.blockName;
+        let version = nextVersion || this.props.match.params.version;
+        let platform = nextPlatform || this.props.match.params.platform || 'desktop';
 
-        this.props.history.pushState(
-            null,
-            `/wiki/libs/${libName}/${blockName}/${version}/${platform}`
+        this.props.history.push(
+            `/wiki/libs/${libName}/${blockName}/${version}/${platform}`,
+            null
         );
     }
 
@@ -122,8 +122,8 @@ export default class Block extends React.Component {
     }
 
     handleSnapshotClick = async event => {
-        let blockName = this.props.params.blockName;
-        let libName = this.props.params.libName;
+        let blockName = this.props.match.params.blockName;
+        let libName = this.props.match.params.libName;
 
         let response = await API.blocks.snapshot(libName, blockName);
 
@@ -133,35 +133,35 @@ export default class Block extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let blockName = this.props.params.blockName;
-        let libName = this.props.params.libName;
+        let blockName = this.props.match.params.blockName;
+        let libName = this.props.match.params.libName;
 
-        let newBlockName = nextProps.params.blockName;
-        let newLibName = nextProps.params.libName;
+        let newBlockName = nextProps.match.params.blockName;
+        let newLibName = nextProps.match.params.libName;
 
         if (newBlockName !== blockName || newLibName !== libName) {
             this.setState({ loaded: false });
             this.loadBlockInfo(nextProps);
-        } else if (nextProps.params.version === void 0) {
+        } else if (nextProps.match.params.version === void 0) {
             this.goToVersion(this.state.current);
         }
     }
 
     render() {
         if (this.state.loaded) {
-            let version = this.props.params.version || this.state.current;
-            let platform = this.props.params.platform || 'desktop';
+            let version = this.props.match.params.version || this.state.current;
+            let platform = this.props.match.params.platform || 'desktop';
             let src = `/blocks/${this.state.library}/${this.state.name}/${version}/${this.state.name}.md?platform=${platform}${this.props.location.hash}`;
 
             return <div className={css(s.block)}>
                 <Head
                     path={this.state.path}
                     owner={this.state.owner}
-                    currentPlatform={this.props.params.platform}
+                    currentPlatform={this.props.match.params.platform}
                     platforms={this.state.platforms}
                     onPlatformChange={this.handlePlatformChange}
                     versions={this.state.versions}
-                    currentVersion={this.props.params.version}
+                    currentVersion={this.props.match.params.version}
                     onVersionChange={this.handleVersionChange}
                     onSnapshot={this.handleSnapshotClick}
                     docSrc={src}

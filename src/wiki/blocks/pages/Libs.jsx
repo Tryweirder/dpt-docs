@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { Route, Redirect } from 'react-router-dom';
 
 import * as API from '../../lib/api-client';
 
+import Block from './Block';
 import Pane from '../Pane';
 import Link from '../Link';
 
@@ -33,10 +35,9 @@ export default class Wiki extends React.Component {
     async componentDidMount() {
         let blocks = [];
         let libraries = await API.libraries.list();
-        if (this.props.params.libName) {
-            blocks = (await API.blocks.byLibrary(this.props.params.libName)).blocks;
+        if (this.props.match.params.libName) {
+            blocks = (await API.blocks.byLibrary(this.props.match.params.libName)).blocks;
         }
-
         this.setState({
             libraries, blocks, loaded: true
         });
@@ -46,14 +47,14 @@ export default class Wiki extends React.Component {
         let changes = {};
         let blockNames = this.state.blocks.map(b => b.name);
         if (
-            nextProps.params.libName !== this.props.params.libName ||
-            blockNames.indexOf(nextProps.params.blockName) < 0
+            nextProps.match.params.libName !== this.props.match.params.libName ||
+            blockNames.indexOf(nextProps.match.params.blockName) < 0
         ) {
-            changes.blocks = (await API.blocks.byLibrary(nextProps.params.libName)).blocks;
+            changes.blocks = (await API.blocks.byLibrary(nextProps.match.params.libName)).blocks;
         }
 
         let libraryNames = this.state.libraries.map(l => l.name);
-        if (libraryNames.indexOf(nextProps.params.libName) < 0) {
+        if (libraryNames.indexOf(nextProps.match.params.libName) < 0) {
             changes.libraries = (await API.libraries.list());
         }
 
@@ -83,8 +84,8 @@ export default class Wiki extends React.Component {
                 backgroundImage: !this.props.children && cover && `url(${cover})`
             }}>
                 {libraries.length > 0 && <Pane items={libraries} />}
-                {blocks.length > 0 && this.props.params.libName && <Pane items={blocks} />}
-                {this.props.children}
+                {blocks.length > 0 && this.props.match.params.libName && <Pane items={blocks} />}
+                 <Route path='/wiki/libs/:libName/:blockName/:version?/:platform?' component={Block} /> 
             </div>;
         } else {
             return <div className={css(s.libs)} />;

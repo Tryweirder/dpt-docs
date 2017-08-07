@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
+import { Route, Redirect } from 'react-router-dom';
 
 import * as API from '../../lib/api-client';
 
-import Page from '../pages/Page';
+import Libs from './Libs';
+import Page from './Page';
+
 import Link from '../Link';
 import Spinner from '../Spinner';
 import Search from '../Search';
@@ -182,18 +185,21 @@ export default class Wiki extends React.Component {
                     />
                     <Modal padded open={this.state.newBlockFormOpen} onClose={this.handleNewBlockFormClose}>
                         <NewBlock
-                            currentLibrary={this.props.params.libName}
+                            currentLibrary={this.props.match.params.libName}
                             onSuccess={this.handleNewBlockSuccess}
                         />
                     </Modal>
                     <Modal padded open={this.state.newLibraryFormOpen} onClose={this.handleNewLibraryFormClose}>
                         <NewLibrary
-                            currentLibrary={this.props.params.libName}
+                            currentLibrary={this.props.match.params.libName}
                             onSuccess={this.handleNewLibrarySuccess}
                         />
                     </Modal>
                     <div className={css(s.content)}>
-                        {this.props.children}
+                        <Route exact path='/wiki' render={() =>
+                            <Redirect to="/wiki/libs" />
+                        } />
+                        <Route path='/wiki/libs/:libName?' component={Libs} />
                     </div>
                 </div>
             </Page>;
@@ -205,7 +211,7 @@ export default class Wiki extends React.Component {
 
 function Head(props) {
     let isLocal = window.location.hostname === 'localhost';
-    let pathname = props.history.createHref(props.location.pathname, props.location.query);
+    let pathname = props.history.createHref(props.location);
     let hash = props.location.hash;
     const linkMixins = {
         mixClassName: s.link,
@@ -215,7 +221,7 @@ function Head(props) {
     return <div className={css(s.head, isLocal ? s.head_local : s.head_external)}>
         <Head.Group main={true}>
             <div className={css(s.title)}><Link {...linkMixins} href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
-            <ul className={css(s.menu)}>
+             <ul className={css(s.menu)}>
                 <li className={css(s.menuItem)}><Link {...linkMixins} href='/wiki/libs'>Blocks</Link></li>
                 <li className={css(s.menuItem)}><Link {...linkMixins} external href='/projects'>Projects</Link></li>
             </ul>
@@ -230,9 +236,9 @@ function Head(props) {
                     <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
                     <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
                 </ul>
-            }
+            } 
         </Head.Group>
-        <Head.Group>
+         <Head.Group>
             <ul className={css(s.menu)}>
                 {props.depotConfig.repository &&
                     <li className={css(s.menuItem)}>
@@ -265,7 +271,7 @@ function Head(props) {
                     }
                 </li>
             </ul>
-        </Head.Group>
+        </Head.Group> 
     </div>;
 }
 
