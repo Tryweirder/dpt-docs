@@ -2,7 +2,7 @@ import React from 'react';
 import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
-import Pane from '../WPane/WPane';
+import Pane from '../Pane';
 import Link from '../WLink/WLink';
 
 const s = StyleSheet.create({
