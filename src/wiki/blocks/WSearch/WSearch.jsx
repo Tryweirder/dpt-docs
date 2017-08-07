@@ -171,7 +171,7 @@ export default class Search extends React.Component {
                 size="S"
                 kind={this.state.focused ? 'normal' : 'pseudo-head'}
                 value={this.state.value}
-                placeholder={`Blocks Search ${shortcut}`}
+                placeholder={`Search ${shortcut}`}
                 onChange={this.handleChange.bind(this)}
                 onKeyDown={this.handleKeyPress.bind(this)}
                 onFocus={this.open.bind(this)}
