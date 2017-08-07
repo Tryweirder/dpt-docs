@@ -70,7 +70,7 @@ export default class Example extends React.Component {
                 </div>
                 <div {...b('content') } style={style} ref="example" />
                 <div {...b('code')}>
-                    <Cut title="Show the code">
+                    <Cut title="Code">
                         <div {...b('code-content')}>
                             {this.props.code}
                         </div>
