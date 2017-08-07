@@ -1,22 +1,77 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import block from 'propmods';
 import FuzzAldrin from 'fuzzaldrin-plus';
 import _ from 'lodash';
 import reqwest from 'reqwest';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-import Input from '../WInput/WInput';
-import Link from '../Link';
+import { colors, borders } from '../css/const';
 
-import './WSearch.less';
+import Input from './WInput/WInput';
+import Link from './Link';
 
-let b = block('WSearch');
+const s = StyleSheet.create({
+    search: {
+        position: 'relative',
+        top: 1
+    },
+
+    popup: {
+        boxSizing: 'border-box',
+        position: 'absolute',
+        marginTop: 17,
+        minWidth: '100%',
+        border: '1px solid rgba(0, 0, 0, 0.06)',
+        boxShadow: '0 10px 20px -5px rgba(0, 0, 0, 0.4)',
+        background: '#fff',
+        opacity: 0,
+        pointerEvents: 'none',
+        zIndex: 100,
+        overflow: 'scroll',
+        transition: 'opacity 0.1s ease-out, margin-top 0.1s ease-out'
+    },
+
+    popup_open: {
+        opacity: 1,
+        marginTop: 7,
+        pointerEvents: 'auto'
+    },
+
+    block: {
+        padding: 12,
+
+        ':not(:first-child)': {
+            borderTop: borders.basic
+        }
+    },
+
+    block_selected: {
+        background: colors.selection,
+        cursor: 'pointer'
+    },
+
+    name: {
+        fontSize: 16,
+        color: '#000'
+    },
+
+    library: {
+        marginTop: 5,
+        color: '#999'
+    }
+});
 
 window.FuzzAldrin = FuzzAldrin;
 
 export default class Search extends React.Component {
     constructor(props) {
         super(props);
+
+        this.lastMousePosition = {
+            x: 0,
+            y: 0
+        };
+
         this.state = {
             open: false,
             clickable: false,
@@ -25,7 +80,8 @@ export default class Search extends React.Component {
             value: props.value || '',
             blocks: [],
             foundBlocks: [],
-            selected: 0
+            selected: 0,
+            hover: null
         }
     }
 
@@ -42,27 +98,27 @@ export default class Search extends React.Component {
                 Object.defineProperty(escape, 'which', { value: 27 });
                 window.dispatchEvent(escape);
 
-                this.refs.input.focus();
-                this.refs.input.moveCursorToEnd();
+                this.input.focus();
+                this.input.moveCursorToEnd();
             }
         });
     }
 
     componentDidUpdate() {
-        if (this.state.open && this.refs.selected) {
-            let selectedOffset = this.refs.selected.offsetTop;
-            let selectedBottom = this.refs.selected.offsetHeight + selectedOffset;
+        if (this.state.open && this.selected) {
+            let selectedOffset = this.selected.offsetTop;
+            let selectedBottom = this.selected.offsetHeight + selectedOffset;
 
-            let popupHeight = this.refs.popup.offsetHeight;
-            let popupScroll = this.refs.popup.scrollTop;
+            let popupHeight = this.popup.offsetHeight;
+            let popupScroll = this.popup.scrollTop;
             let popupBottom = popupHeight + popupScroll;
 
             if (selectedOffset < popupScroll) {
-                this.refs.popup.scrollTop = selectedOffset;
+                this.popup.scrollTop = selectedOffset;
             }
 
             if (selectedBottom > popupBottom) {
-                this.refs.popup.scrollTop = selectedBottom - popupHeight;
+                this.popup.scrollTop = selectedBottom - popupHeight;
             }
         }
     }
@@ -90,36 +146,53 @@ export default class Search extends React.Component {
         }
     }
 
-    handleChange(event) {
+    handleBlur = event => {
+        this.close();
+    }
+
+    handleChange = event => {
         this.changeValue(event.target.value);
     }
 
-    handleKeyPress(event) {
+    handleKeyPress = event => {
         if (event.key === 'ArrowDown') {
             event.preventDefault();
             if (this.state.selected < this.state.foundBlocks.length - 1) {
-                this.setState({ selected: this.state.selected + 1 });
+                this.setState({
+                    selected: this.state.selected + 1
+                });
             }
         } else if (event.key === 'ArrowUp') {
             event.preventDefault();
             if (this.state.selected > 0) {
-                this.setState({ selected: this.state.selected - 1 });
+                this.setState({
+                    selected: this.state.selected - 1
+                });
             }
         } else if (event.key === 'Escape') {
-            this.refs.input.blur();
+            this.input.blur();
         } else if (event.key === 'Enter') {
             this.handleSelect(this.state.foundBlocks[this.state.selected]);
         }
     }
 
-    handleBlur(event) {
-        this.close();
+    handleMouseMove = (event, i) => {
+        const { x, y } = this.lastMousePosition;
+        const { pageX, pageY } = event;
+
+        if (this.state.selected !== i && (x !== pageX || y !== pageY)) {
+            this.setState({ selected: i });
+            this.lastMousePosition = {
+                x: pageX,
+                y: pageY
+            };
+        }
     }
 
-    handleSelect(block) {
+    handleSelect = block => {
         this.changeValue('');
         this.props.onSelect(block);
-        this.refs.input.blur();
+        this.input.blur();
     }
 
     loadBlocks() {
@@ -146,27 +219,33 @@ export default class Search extends React.Component {
     }
 
     render() {
-        let selected = this.state.selected;
+        let blocks = this.state.foundBlocks.map((block, i) => {
+            const isSelected = i === this.state.selected;
+            const isHovered = i === this.state.hover;
 
-        let blocks = this.state.foundBlocks.map((block, i) =>
-            <div
-                {...b('block', { selected: i === selected }) }
-                ref={i === selected ? 'selected' : ''}
+            return <div
+                className={css(
+                    s.block,
+                    isSelected && s.block_selected
+                )}
+                ref={selected => isSelected && (this.selected = selected)}
                 key={block.id}
                 onClick={() => this.handleSelect(block)}
+                onMouseMove={event => this.handleMouseMove(event, i)}
             >
-                <div {...b('block-name') }>
+                <div className={css(s.name)}>
                     {block.name}
                 </div>
-                <div {...b('block-library') }>
+                <div className={css(s.library)}>
                     {block.library}
                 </div>
-        </div>);
+            </div>;
+        });
 
         const platform = (/^mac/i).test(navigator.platform) ? 'mac' : 'other';
         const shortcut = platform === 'mac' ? '⌘P' : 'Ctrl+P';
 
-        return <div {...b(this) } ref="search">
+        return <div className={css(s.search)}>
             <Input
                 size="S"
                 kind={this.state.focused ? 'normal' : 'pseudo-head'}
@@ -176,10 +255,14 @@ export default class Search extends React.Component {
                 onKeyDown={this.handleKeyPress.bind(this)}
                 onFocus={this.open.bind(this)}
                 onBlur={this.handleBlur.bind(this)}
-                ref="input"
+                ref={input => this.input = input}
                 style={{ borderRadius: 2 }}
             />
-            <div {...b('popup') } ref="popup">
+            <div
+                className={css(s.popup, this.state.open && s.popup_open)}
+                style={{ width: '150%', maxHeight: 315 }}
+                ref={popup => this.popup = popup}
+            >
                 {blocks}
             </div>
         </div>;

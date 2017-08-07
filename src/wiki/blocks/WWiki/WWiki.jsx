@@ -6,7 +6,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import Page from '../pages/Page';
 import Link from '../Link';
 import Spinner from '../Spinner';
-import Search from '../WSearch/WSearch';
+import Search from '../Search';
 import Modal from '../Modal';
 import NewBlock from '../forms/NewBlock';
 import NewLibrary from '../forms/NewLibrary';
