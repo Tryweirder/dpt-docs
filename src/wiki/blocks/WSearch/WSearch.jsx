@@ -31,10 +31,11 @@ export default class Search extends React.Component {
 
     componentDidMount() {
         window.addEventListener('keydown', event => {
-            if (event.shiftKey && event.ctrlKey &&
-                (event.keyCode === 80 ||
-                    event.keyIdentifier === 'U+0050' ||
-                    event.keyIdentifier === 'U+0417')) {
+            const platform = (/^mac/i).test(navigator.platform) ? 'mac' : 'other';
+            const isCmdP = event.metaKey && (event.keyCode === 80 || event.code === 'KeyP');
+            const isCtrlP = event.ctrlKey && (event.keyCode === 80 || event.code === 'KeyP');
+            if ((platform === 'mac' && isCmdP) || (platform === 'other' && isCtrlP)) {
+                event.preventDefault();
 
                 // This is to close any open modals
                 let escape = new KeyboardEvent('keydown');
@@ -149,25 +150,28 @@ export default class Search extends React.Component {
 
         let blocks = this.state.foundBlocks.map((block, i) =>
             <div
-                {...b('block', { selected: i === selected })}
+                {...b('block', { selected: i === selected }) }
                 ref={i === selected ? 'selected' : ''}
                 key={block.id}
                 onClick={() => this.handleSelect(block)}
             >
-                <div {...b('block-name')}>
-                    { block.name }
+                <div {...b('block-name') }>
+                    {block.name}
                 </div>
-                <div {...b('block-library')}>
-                    { block.library }
+                <div {...b('block-library') }>
+                    {block.library}
                 </div>
-            </div>);
+        </div>);
 
-        return <div {...b(this)} ref="search">
+        const platform = (/^mac/i).test(navigator.platform) ? 'mac' : 'other';
+        const shortcut = platform === 'mac' ? '⌘P' : 'Ctrl+P';
+
+        return <div {...b(this) } ref="search">
             <Input
                 size="S"
                 kind={this.state.focused ? 'normal' : 'pseudo-head'}
                 value={this.state.value}
-                placeholder="Blocks Search ⌃⇧P"
+                placeholder={`Blocks Search ${shortcut}`}
                 onChange={this.handleChange.bind(this)}
                 onKeyDown={this.handleKeyPress.bind(this)}
                 onFocus={this.open.bind(this)}
@@ -175,7 +179,7 @@ export default class Search extends React.Component {
                 ref="input"
                 style={{ borderRadius: 2 }}
             />
-            <div {...b('popup')} ref="popup">
+            <div {...b('popup') } ref="popup">
                 {blocks}
             </div>
         </div>;
