@@ -2,7 +2,7 @@ import React from 'react';
 import {cookie} from 'cookie_js';
 import reqwest from 'reqwest';
 
-import Form from '../WForm/WForm';
+import Form from '../Form';
 import Input from '../WInput/WInput';
 import Select from '../Select';
 import Button from '../WButton/WButton';
