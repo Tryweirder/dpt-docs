@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Router, Route, Redirect } from 'react-router';
 import { createHistory } from 'history';
 
-import Wiki from './blocks/WWiki/WWiki';
+import Wiki from './blocks/pages/Wiki';
 import Libs from './blocks/pages/Libs';
 import Block from './blocks/pages/Block';
 import Projects from './blocks/pages/Projects';

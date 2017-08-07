@@ -1,5 +1,4 @@
 import React from 'react';
-import block from 'propmods';
 import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
@@ -11,11 +10,67 @@ import Modal from '../Modal';
 import NewBlock from '../forms/NewBlock';
 import NewLibrary from '../forms/NewLibrary';
 
-import './WWiki.less';
-
-let b = block('WWiki');
+const headHeight = 40;
+const headColor = 'rgba(255, 255, 255, 0.8)';
 
 const s = StyleSheet.create({
+    wiki: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+    },
+
+    head: {
+        display: 'flex',
+        alignItems: 'center',
+        height: headHeight,
+        color: headColor,
+        flexGrow: 0,
+        flexShrink: 0,
+        padding: '0 20px 2px',
+        bloxShadow: '0 0 0 1px rgba(255, 255, 255, 0.08)'
+    },
+
+    head_external: {
+        background: '#333338'
+    },
+
+    head_local: {
+        background: '#962c2c'
+    },
+
+    title: {
+        textTransform: 'uppercase',
+        letterSpacing: 2,
+        color: '#fc0'
+    },
+
+    content: {
+        display: 'flex',
+        flex: `0 1 calc(100% - ${headHeight}px)`,
+        alignItems: 'stretch'
+    },
+
+    headGroup: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+
+    headGroup_main: {
+        flexGrow: 1
+    },
+
+    menu: {
+        ':not(:first-child)': {
+            marginLeft: 40
+        }
+    },
+
+    menuItem: {
+        display: 'inline-block',
+        marginLeft: 20
+    },
+
     link: {
         color: 'rgba(255, 255, 255, 0.8)',
 
@@ -119,7 +174,7 @@ export default class Wiki extends React.Component {
     render() {
         if (this.state.loaded) {
             return <Page>
-                <div {...b() }>
+                <div className={css(s.wiki)}>
                     <Head
                         depotConfig={this.state.depotConfig}
                         location={this.props.location}
@@ -141,7 +196,7 @@ export default class Wiki extends React.Component {
                             onSuccess={this.handleNewLibrarySuccess}
                         />
                     </Modal>
-                    <div {...b('content') }>
+                    <div className={css(s.content)}>
                         {this.props.children}
                     </div>
                 </div>
@@ -161,45 +216,45 @@ function Head(props) {
         activeClassName: css(s.link_active)
     };
 
-    return <div {...b('head', { local: isLocal }) }>
+    return <div className={css(s.head, isLocal ? s.head_local : s.head_external)}>
         <Head.Group main={true}>
-            <div {...b('title') }><Link {...linkMixins} href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
-            <ul {...b('menu') }>
-                <li {...b('menu-item') }><Link {...linkMixins} href='/wiki/libs'>Blocks</Link></li>
-                <li {...b('menu-item') }><Link {...linkMixins} external href='/projects'>Projects</Link></li>
+            <div className={css(s.title)}><Link {...linkMixins} href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
+            <ul className={css(s.menu)}>
+                <li className={css(s.menuItem)}><Link {...linkMixins} href='/wiki/libs'>Blocks</Link></li>
+                <li className={css(s.menuItem)}><Link {...linkMixins} external href='/projects'>Projects</Link></li>
             </ul>
-            <ul {...b('menu') }>
-                <li {...b('menu-item') }>
+            <ul className={css(s.menu)}>
+                <li className={css(s.menuItem)}>
                     <Search blocks={props.blocks} onSelect={props.onFindBlock} />
                 </li>
             </ul>
             {
                 isLocal &&
-                <ul {...b('menu') }>
-                    <li {...b('menu-item') }><Link {...linkMixins} href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
-                    <li {...b('menu-item') }><Link {...linkMixins} href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
+                <ul className={css(s.menu)}>
+                    <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
+                    <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
                 </ul>
             }
         </Head.Group>
         <Head.Group>
-            <ul {...b('menu') }>
+            <ul className={css(s.menu)}>
                 {props.depotConfig.repository &&
-                    <li {...b('menu-item') }>
+                    <li className={css(s.menuItem)}>
                         <Link {...linkMixins} href={props.depotConfig.repository}>
                             GitHub
                         </Link>
                     </li>
                 }
                 {props.depotConfig.docs &&
-                    <li {...b('menu-item') }>
+                    <li className={css(s.menuItem)}>
                         <Link {...linkMixins} href={props.depotConfig.docs}>
                             Quick Start
                         </Link>
                     </li>
                 }
             </ul>
-            <ul {...b('menu') }>
-                <li {...b('menu-item') }>
+            <ul className={css(s.menu)}>
+                <li className={css(s.menuItem)}>
                     {
                         isLocal ?
                             props.depotConfig.url &&
@@ -219,8 +274,7 @@ function Head(props) {
 }
 
 Head.Group = function (props) {
-    let cn = b('head-group', { main: props.main });
-    return <div {...cn}>
+    return <div className={css(s.headGroup, props.main && s.headGroup_main)}>
         {props.children}
     </div>;
 };
