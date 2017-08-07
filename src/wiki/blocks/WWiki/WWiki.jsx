@@ -1,6 +1,7 @@
 import React from 'react';
 import block from 'propmods';
 import reqwest from 'reqwest';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 import Page from '../pages/Page';
 import Link from '../Link';
@@ -13,6 +14,24 @@ import NewLibrary from '../forms/NewLibrary';
 import './WWiki.less';
 
 let b = block('WWiki');
+
+const s = StyleSheet.create({
+    link: {
+        color: 'rgba(255, 255, 255, 0.8)',
+
+        ':hover': {
+            color: 'rgba(255, 255, 255, 0.9)'
+        }
+    },
+
+    link_active: {
+        color: '#fc0 !important',
+
+        ':hover': {
+            color: '#fff5cc !important'
+        }
+    }
+});
 
 export default class Wiki extends React.Component {
     constructor(props) {
@@ -100,7 +119,7 @@ export default class Wiki extends React.Component {
     render() {
         if (this.state.loaded) {
             return <Page>
-                <div {...b()}>
+                <div {...b() }>
                     <Head
                         depotConfig={this.state.depotConfig}
                         location={this.props.location}
@@ -122,8 +141,8 @@ export default class Wiki extends React.Component {
                             onSuccess={this.handleNewLibrarySuccess}
                         />
                     </Modal>
-                    <div {...b('content')}>
-                        { this.props.children }
+                    <div {...b('content') }>
+                        {this.props.children}
                     </div>
                 </div>
             </Page>;
@@ -137,55 +156,60 @@ function Head(props) {
     let isLocal = window.location.hostname === 'localhost';
     let pathname = props.history.createHref(props.location.pathname, props.location.query);
     let hash = props.location.hash;
-    return <div {...b('head', {local: isLocal})}>
+    const linkMixins = {
+        mixClassName: s.link,
+        activeClassName: css(s.link_active)
+    };
+
+    return <div {...b('head', { local: isLocal }) }>
         <Head.Group main={true}>
-            <div {...b('title')}><Link href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
-            <ul {...b('menu')}>
-                <li {...b('menu-item')}><Link href='/wiki/libs'>Blocks</Link></li>
-                <li {...b('menu-item')}><Link external href='/projects'>Projects</Link></li>
+            <div {...b('title') }><Link {...linkMixins} href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
+            <ul {...b('menu') }>
+                <li {...b('menu-item') }><Link {...linkMixins} href='/wiki/libs'>Blocks</Link></li>
+                <li {...b('menu-item') }><Link {...linkMixins} external href='/projects'>Projects</Link></li>
             </ul>
-            <ul {...b('menu')}>
-                <li {...b('menu-item')}>
+            <ul {...b('menu') }>
+                <li {...b('menu-item') }>
                     <Search blocks={props.blocks} onSelect={props.onFindBlock} />
                 </li>
             </ul>
             {
                 isLocal &&
-                <ul {...b('menu')}>
-                    <li {...b('menu-item')}><Link href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
-                    <li {...b('menu-item')}><Link href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
+                <ul {...b('menu') }>
+                    <li {...b('menu-item') }><Link {...linkMixins} href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
+                    <li {...b('menu-item') }><Link {...linkMixins} href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
                 </ul>
             }
         </Head.Group>
         <Head.Group>
-            <ul {...b('menu')}>
-                { props.depotConfig.repository &&
-                    <li {...b('menu-item')}>
-                        <Link href={props.depotConfig.repository}>
+            <ul {...b('menu') }>
+                {props.depotConfig.repository &&
+                    <li {...b('menu-item') }>
+                        <Link {...linkMixins} href={props.depotConfig.repository}>
                             GitHub
                         </Link>
                     </li>
                 }
-                { props.depotConfig.docs &&
-                    <li {...b('menu-item')}>
-                        <Link href={props.depotConfig.docs}>
+                {props.depotConfig.docs &&
+                    <li {...b('menu-item') }>
+                        <Link {...linkMixins} href={props.depotConfig.docs}>
                             Quick Start
                         </Link>
                     </li>
                 }
             </ul>
-            <ul {...b('menu')}>
-                <li {...b('menu-item')}>
+            <ul {...b('menu') }>
+                <li {...b('menu-item') }>
                     {
                         isLocal ?
                             props.depotConfig.url &&
-                                <Link href={props.depotConfig.url + pathname + hash}>
-                                    To Public Version
+                            <Link {...linkMixins} href={props.depotConfig.url + pathname + hash}>
+                                To Public Version
                                 </Link>
                             :
                             props.depotConfig.port &&
-                                <Link href={'http://localhost:' + props.depotConfig.port + pathname + hash}>
-                                    To Local Version
+                            <Link {...linkMixins} href={'http://localhost:' + props.depotConfig.port + pathname + hash}>
+                                To Local Version
                                 </Link>
                     }
                 </li>
@@ -194,7 +218,7 @@ function Head(props) {
     </div>;
 }
 
-Head.Group = function(props) {
+Head.Group = function (props) {
     let cn = b('head-group', { main: props.main });
     return <div {...cn}>
         {props.children}
