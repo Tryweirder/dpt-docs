@@ -10,7 +10,6 @@ import RDS from 'react-dom/server';
 import visit from 'unist-util-visit';
 import yaml from 'yaml-js';
 
-import * as File from 'dpt/lib/file';
 import Doc from '../wiki/blocks/WDoc/WDoc';
 import 'dpt/lib/vendor/beast';
 
