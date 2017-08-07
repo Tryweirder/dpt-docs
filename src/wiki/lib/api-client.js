@@ -9,6 +9,9 @@ function post(url, data, opts = {}) {
     return fetch(url, {
         method: 'POST',
         credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(data),
         ...opts
     }).then(r => r.json());
@@ -17,12 +20,20 @@ function post(url, data, opts = {}) {
 export const libraries = {
     list() {
         return get('/api/wiki/libs')
-    }
+    },
+
+    create(form) {
+        return post('/api/wiki/libs', form);
+    },
 };
 
 export const blocks = {
-    list(library) {
-        return get(`/api/wiki/libs/${library || ''}`)
+    list() {
+        return get(`/api/wiki/blocks`)
+    },
+
+    byLibrary(library) {
+        return get(`/api/wiki/libs/${library}`)
     },
 
     get(library, block) {
@@ -34,7 +45,9 @@ export const blocks = {
     },
 
     snapshot(library, block) {
-        return post(`/api/wiki/libs/${library}/${block}/snapshot`);
+        return post(`/api/wiki/libs/${library}/${block}/snapshot`, {
+            library, block
+        });
     }
 }
 

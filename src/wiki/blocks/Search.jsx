@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FuzzAldrin from 'fuzzaldrin-plus';
 import _ from 'lodash';
-import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
 
+import * as API from '../lib/api-client';
 import { colors, borders } from '../css/const';
 
 import Input from './Input';
@@ -199,12 +199,6 @@ export default class Search extends React.Component {
         this.input.blur();
     }
 
-    loadBlocks() {
-        return reqwest({
-            url: '/api/wiki/blocks'
-        });
-    }
-
     async open() {
         this.setState({ focused: true });
 
@@ -214,7 +208,7 @@ export default class Search extends React.Component {
         };
 
         if (!this.state.loaded) {
-            nextState.blocks = await this.loadBlocks();
+            nextState.blocks = await API.blocks.list();
             nextState.foundBlocks = this.findBlocks(this.state.value, nextState.blocks);
             nextState.loaded = true;
         }

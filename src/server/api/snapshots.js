@@ -6,8 +6,8 @@ import _ from 'lodash';
 export default function Blocks({ Block, Library, logger }) {
     return {
         async create(req, res) {
-            let library = new Library(req.params.library);
-            let block = new Block(library, req.params.block);
+            let library = new Library(req.body.library);
+            let block = new Block(library, req.body.block);
 
             try {
                 let result = await block.snapshot();

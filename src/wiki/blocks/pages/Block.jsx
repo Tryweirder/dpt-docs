@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import reqwest from 'reqwest';
 import {StyleSheet, css} from 'aphrodite/no-important';
 
+import * as API from '../../lib/api-client';
 import { colors } from '../../css/const';
 
 import Link from '../Link';
@@ -69,9 +69,7 @@ export default class Block extends React.Component {
         let blockName = props.params.blockName;
         let libName = props.params.libName;
 
-        let response = await reqwest({
-            url: '/api/wiki/libs/' + libName + '/' + blockName
-        });
+        let response = await API.blocks.get(libName, blockName);
 
         let platform = props.params.platform;
 
@@ -123,15 +121,11 @@ export default class Block extends React.Component {
         this.loadBlockInfo(this.props);
     }
 
-    async handleSnapshotClick(event) {
-        event.preventDefault();
+    handleSnapshotClick = async event => {
         let blockName = this.props.params.blockName;
         let libName = this.props.params.libName;
 
-        let response = await reqwest({
-            url: `/api/wiki/libs/${libName}/${blockName}/snapshot`,
-            method: 'POST'
-        });
+        let response = await API.blocks.snapshot(libName, blockName);
 
         console.log(response);
 

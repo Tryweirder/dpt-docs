@@ -32,6 +32,7 @@ export default function Libraries({ Block, Library }) {
 
         async create(req, res) {
             try {
+                console.log(req.body);
                 let result = await Library.scaffold(req.body);
                 res.json(result);
             } catch (err) {

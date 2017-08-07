@@ -1,5 +1,6 @@
 import React from 'react';
-import reqwest from 'reqwest';
+
+import * as API from '../../lib/api-client';
 
 import Form from '../Form';
 import Input from '../Input';
@@ -10,45 +11,26 @@ export default class NewBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loaded: false
+            loaded: true
         };
-    }
-
-    async componentDidMount() {
-        let libraries = await reqwest({
-            url: '/api/wiki/libs'
-        });
-
-        this.setState({
-            loaded: true,
-            libraries
-        });
     }
 
     handleSubmit = async event => {
         event.preventDefault();
         let form = {};
         ['libname', 'libtitle'].forEach(ref => form[ref] = this.refs[ref].value());
-        let response = await reqwest({
-            url: '/api/wiki/libs/',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(form)
-        });
+        
+        const response = await API.libraries.create(form);
 
-        this.setState({ flash: response.error && response.error.message });
+        // this.setState({ flash: response.error && response.error.message });
 
-        if (response.error === void 0 && this.props.onSuccess) {
-            this.props.onSuccess(response);
-        }
+        // if (response.error === void 0 && this.props.onSuccess) {
+        //     this.props.onSuccess(response);
+        // }
     }
 
     render() {
         if (this.state.loaded) {
-            let libraries = this.state.libraries.map(l =>
-                <Select.Item value={l.name} key={l.name} />
-            );
-
             return <div>
                 <h2>Creating library</h2>
                 <Form flash={this.state.flash} onSubmit={this.handleSubmit} style={{marginTop: 20}}>

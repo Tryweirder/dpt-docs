@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
+
+import * as API from '../../lib/api-client';
 
 import Pane from '../Pane';
 import Link from '../Link';
@@ -29,23 +30,11 @@ export default class Wiki extends React.Component {
         depotConfig: PropTypes.object
     }
 
-    loadLibrariesList() {
-        return reqwest({
-            url: '/api/wiki/libs'
-        });
-    }
-
-    loadBlocksList(libraryName) {
-        return reqwest({
-            url: '/api/wiki/libs/' + libraryName
-        });
-    }
-
     async componentDidMount() {
         let blocks = [];
-        let libraries = await this.loadLibrariesList();
+        let libraries = await API.libraries.list();
         if (this.props.params.libName) {
-            blocks = (await this.loadBlocksList(this.props.params.libName)).blocks;
+            blocks = (await API.blocks.byLibrary(this.props.params.libName)).blocks;
         }
 
         this.setState({
@@ -60,12 +49,12 @@ export default class Wiki extends React.Component {
             nextProps.params.libName !== this.props.params.libName ||
             blockNames.indexOf(nextProps.params.blockName) < 0
         ) {
-            changes.blocks = (await this.loadBlocksList(nextProps.params.libName)).blocks;
+            changes.blocks = (await API.blocks.byLibrary(nextProps.params.libName)).blocks;
         }
 
         let libraryNames = this.state.libraries.map(l => l.name);
         if (libraryNames.indexOf(nextProps.params.libName) < 0) {
-            changes.libraries = (await this.loadLibrariesList());
+            changes.libraries = (await API.libraries.list());
         }
 
         this.setState(changes);

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import reqwest from 'reqwest';
 import { StyleSheet, css } from 'aphrodite/no-important';
+
+import * as API from '../../lib/api-client';
 
 import Page from '../pages/Page';
 import Link from '../Link';
@@ -116,7 +117,7 @@ export default class Wiki extends React.Component {
         let depotConfig;
 
         try {
-            depotConfig = await this.loadDepotConfig();
+            depotConfig = await API.depotConfig.get();
         } catch (e) {
             console.error('Could not load Depot config. Check config.yaml file at the root of your Depot.');
             return;
@@ -164,12 +165,6 @@ export default class Wiki extends React.Component {
     handleNewLibrarySuccess = (response) => {
         this.handleNewLibraryFormClose();
         window.location = `/wiki/libs/${response.libname}/`;
-    }
-
-    loadDepotConfig() {
-        return reqwest({
-            url: '/api/wiki/config'
-        });
     }
 
     render() {

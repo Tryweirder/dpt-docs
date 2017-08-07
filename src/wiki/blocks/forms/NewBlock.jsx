@@ -1,6 +1,7 @@
 import React from 'react';
 import {cookie} from 'cookie_js';
-import reqwest from 'reqwest';
+
+import * as API from '../../lib/api-client';
 
 import Form from '../Form';
 import Input from '../Input';
@@ -16,9 +17,7 @@ export default class NewBlock extends React.Component {
     }
 
     async componentDidMount() {
-        let libraries = await reqwest({
-            url: '/api/wiki/libs'
-        });
+        const libraries = await API.libraries.list();
 
         this.setState({
             loaded: true,
@@ -31,12 +30,8 @@ export default class NewBlock extends React.Component {
         let form = {};
         ['block', 'title', 'lib', 'owner'].forEach(ref => form[ref] = this.refs[ref].value());
         cookie.set('username', form.owner, {path: '/', expires: 99999});
-        let response = await reqwest({
-            url: '/api/wiki/blocks/',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(form)
-        });
+
+        const response = await API.blocks.create(form);
 
         this.setState({ flash: response.error && response.error.message });
 
