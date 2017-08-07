@@ -3,6 +3,9 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 
 const s = StyleSheet.create({
     modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         position: 'fixed',
         top: 0,
         left: 0,
@@ -11,25 +14,13 @@ const s = StyleSheet.create({
         opacity: 0,
         pointerEvents: 'none',
         zIndex: '1000',
-        transition: 'opacity 0.1s ease-out'
+        transition: 'opacity 0.1s ease-out',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)'
     },
 
     modal_open: {
-        display: 'block',
         opacity: 1,
         pointerEvents: 'auto'
-    },
-
-    fog: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
     },
 
     content: {
@@ -58,46 +49,52 @@ export default class Modal extends React.Component {
         showControls: false
     };
 
+    handleClose = () => {
+        if (!this.props.force && this.props.onClose) {
+            this.props.onClose();
+        }
+    }
+
+    handleFogClick = (event) => {
+        if (event.target === this.fog) {
+            this.handleClose();
+        }
+    }
+
+    handleWindowKeyDown = (event) => {
+        if (event.which === 27) { // Escape
+            this.handleClose();
+        }
+    }
+
     componentDidMount() {
-        window.addEventListener('keydown', this.handleWindowKeyDown.bind(this));
+        window.addEventListener('keydown', this.handleWindowKeyDown);
     }
 
     componentWillUnmount() {
         window.removeEventListener('keydown', this.handleWindowKeyDown);
     }
 
-    handleWindowKeyDown(event) {
-        if (event.which === 27) { // Escape
-            this.handleClose();
-        }
-    }
-
-    handleClose() {
-        if (!this.props.force && this.props.onClose) {
-            this.props.onClose();
-        }
-    }
-
-    handleFogClick(event) {
-        if (event.target === this.refs.fog) {
-            this.handleClose();
-        }
-    }
-
     render() {
-        return <div className={css(s.modal, this.props.open && s.modal_open)}>
-            <div className={css(s.fog)} onClick={this.handleFogClick.bind(this)} ref="fog">
-                <div className={css(s.content, this.props.padded && s.content_padded)}>
-                    {this.props.children}
-                </div>
+        const props = this.props;
+
+        return <div
+            className={css(s.modal, props.open && s.modal_open)}
+            onClick={this.handleFogClick}
+            ref={fog => this.fog = fog}
+        >
+            <div className={css(s.content, props.padded && s.content_padded)}>
+                {props.children}
             </div>
+            
             {
-                this.props.showControls &&
+                props.showControls &&
                 <div className={css(s.controls)}>
-                    {this.props.controls}
-                    <div className={css(s.close)} onClick={this.handleClose.bind(this)}>Close</div>
+                    {props.controls}
+                    <div className={css(s.close)} onClick={this.handleClose}>Close</div>
                 </div>
             }
+
         </div>;
     }
 }
