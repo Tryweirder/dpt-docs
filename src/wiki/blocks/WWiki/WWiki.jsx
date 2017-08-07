@@ -53,40 +53,40 @@ export default class Wiki extends React.Component {
         });
     }
 
-    handleFindBlock(block) {
+    handleFindBlock = (block) => {
         this.props.history.pushState(null, `/wiki/libs/${block.library}/${block.name}`);
     }
 
-    handleNewBlockClick() {
+    handleNewBlockClick = () => {
         this.setState({
             newBlockFormOpen: true
         });
     }
 
-    handleNewLibraryClick() {
+    handleNewLibraryClick = () => {
         this.setState({
             newLibraryFormOpen: true
         });
     }
 
-    handleNewBlockFormClose() {
+    handleNewBlockFormClose = () => {
         this.setState({
             newBlockFormOpen: false
         });
     }
 
-    handleNewLibraryFormClose() {
+    handleNewLibraryFormClose = () => {
         this.setState({
             newLibraryFormOpen: false
         });
     }
 
-    handleNewBlockSuccess(response) {
+    handleNewBlockSuccess = (response) => {
         this.handleNewBlockFormClose();
         this.props.history.pushState(null, `/wiki/libs/${response.lib}/${response.block}/`);
     }
 
-    handleNewLibrarySuccess(response) {
+    handleNewLibrarySuccess = (response) => {
         this.handleNewLibraryFormClose();
         window.location = `/wiki/libs/${response.libname}/`;
     }
@@ -106,20 +106,20 @@ export default class Wiki extends React.Component {
                         location={this.props.location}
                         history={this.props.history}
                         blocks={this.state.blocks}
-                        onFindBlock={this.handleFindBlock.bind(this)}
-                        onNewBlockClick={this.handleNewBlockClick.bind(this)}
-                        onNewLibraryClick={this.handleNewLibraryClick.bind(this)}
+                        onFindBlock={this.handleFindBlock}
+                        onNewBlockClick={this.handleNewBlockClick}
+                        onNewLibraryClick={this.handleNewLibraryClick}
                     />
-                    <Modal padded open={this.state.newBlockFormOpen} onClose={this.handleNewBlockFormClose.bind(this)}>
+                    <Modal padded open={this.state.newBlockFormOpen} onClose={this.handleNewBlockFormClose}>
                         <NewBlock
                             currentLibrary={this.props.params.libName}
-                            onSuccess={this.handleNewBlockSuccess.bind(this)}
+                            onSuccess={this.handleNewBlockSuccess}
                         />
                     </Modal>
-                    <Modal padded open={this.state.newLibraryFormOpen} onClose={this.handleNewLibraryFormClose.bind(this)}>
+                    <Modal padded open={this.state.newLibraryFormOpen} onClose={this.handleNewLibraryFormClose}>
                         <NewLibrary
                             currentLibrary={this.props.params.libName}
-                            onSuccess={this.handleNewLibrarySuccess.bind(this)}
+                            onSuccess={this.handleNewLibrarySuccess}
                         />
                     </Modal>
                     <div {...b('content')}>
