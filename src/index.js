@@ -20,24 +20,24 @@ function main(app) {
         use: markdown
     });
 
-    router.get('/api/wiki/config', (req, res) => res.json(app.config));
+    router.get('/api/docs/config', (req, res) => res.json(app.config));
 
-    router.get('/api/wiki/libs/:lib/:block', blocks.show);
-    router.get('/api/wiki/blocks/', blocks.index);
-    router.post('/api/wiki/blocks/', blocks.create);
+    router.get('/api/docs/libs/:lib/:block', blocks.show);
+    router.get('/api/docs/blocks/', blocks.index);
+    router.post('/api/docs/blocks/', blocks.create);
 
-    router.get('/api/wiki/libs/:lib/', libraries.show);
-    router.get('/api/wiki/libs/', libraries.index);
-    router.post('/api/wiki/libs/', libraries.create);
+    router.get('/api/docs/libs/:lib/', libraries.show);
+    router.get('/api/docs/libs/', libraries.index);
+    router.post('/api/docs/libs/', libraries.create);
 
-    router.post('/api/wiki/libs/:library/:block/snapshot', snapshots.create);
+    router.post('/api/docs/libs/:library/:block/snapshot', snapshots.create);
 
-    router.get('/', (req, res) => res.redirect('/wiki'));
+    router.get('/', (req, res) => res.redirect('/docs'));
 
     // Statics
 
     let fileMap = {
-        '/wiki(/*)?': 'wiki/wiki.html',
+        '/docs(/*)?': 'wiki/docs.html',
         '/.core/bundles/w-doc.js': 'bundles/w-doc.js',
         '/.core/wiki.js': 'bundles/wiki.js'
     };
@@ -48,7 +48,7 @@ function main(app) {
         });
     }
 
-    let indexCss = Path.resolve(__dirname, 'assets/wiki/serveIndex.css');
+    let indexCss = Path.resolve(__dirname, 'assets/docs/serveIndex.css');
 
     router.use('/.core/assets', express.static(Path.join(__dirname, 'assets')));
     router.use('/projects', serveIndex('projects/', { 'stylesheet': indexCss }));

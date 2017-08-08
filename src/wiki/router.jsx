@@ -8,7 +8,7 @@ import Wiki from './blocks/pages/Wiki';
 
 function WikiRouter(props) {
     return <BrowserRouter>
-        <Route path='/wiki' component={Wiki} />
+        <Route path='/docs' component={Wiki} />
     </BrowserRouter>;
 }
 

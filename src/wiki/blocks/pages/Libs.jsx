@@ -67,14 +67,14 @@ export default class Wiki extends React.Component {
             .map(lib => ({
                 title: lib.name,
                 description: lib.title,
-                href: '/wiki/libs/' + lib.name
+                href: '/docs/libs/' + lib.name
             }));
 
         let blocks = this.state.blocks.map(block => ({
             title: block.name,
             description: block.title,
             deprecated: block.deprecated,
-            href: '/wiki/libs/' + block.library + '/' + block.name
+            href: '/docs/libs/' + block.library + '/' + block.name
         }));
 
         let cover = this.context.depotConfig.cover;
@@ -85,7 +85,7 @@ export default class Wiki extends React.Component {
             }}>
                 {libraries.length > 0 && <Pane items={libraries} />}
                 {blocks.length > 0 && this.props.match.params.libName && <Pane items={blocks} />}
-                 <Route path='/wiki/libs/:libName/:blockName/:version?/:platform?' component={Block} /> 
+                 <Route path='/docs/libs/:libName/:blockName/:version?/:platform?' component={Block} /> 
             </div>;
         } else {
             return <div className={css(s.libs)} />;

@@ -9,7 +9,7 @@ const s = StyleSheet.create({
 
 export default class Projects extends React.Component {
     handleLoad = event => {
-        let routePath = '/wiki';
+        let routePath = '/docs';
         let projectPath = event.target.contentWindow.location.pathname;
 
         this.props.history.replaceState(null, routePath + projectPath);

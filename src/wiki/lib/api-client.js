@@ -19,33 +19,33 @@ function post(url, data, opts = {}) {
 
 export const libraries = {
     list() {
-        return get('/api/wiki/libs')
+        return get('/api/docs/libs')
     },
 
     create(form) {
-        return post('/api/wiki/libs', form);
+        return post('/api/docs/libs', form);
     },
 };
 
 export const blocks = {
     list() {
-        return get(`/api/wiki/blocks`)
+        return get(`/api/docs/blocks`)
     },
 
     byLibrary(library) {
-        return get(`/api/wiki/libs/${library}`)
+        return get(`/api/docs/libs/${library}`)
     },
 
     get(library, block) {
-        return get(`/api/wiki/libs/${library}/${block}`);
+        return get(`/api/docs/libs/${library}/${block}`);
     },
 
     create(form) {
-        return post('/api/wiki/blocks', form);
+        return post('/api/docs/blocks', form);
     },
 
     snapshot(library, block) {
-        return post(`/api/wiki/libs/${library}/${block}/snapshot`, {
+        return post(`/api/docs/libs/${library}/${block}/snapshot`, {
             library, block
         });
     }
@@ -53,6 +53,6 @@ export const blocks = {
 
 export const depotConfig = {
     get() {
-        return get('/api/wiki/config');
+        return get('/api/docs/config');
     }
 }

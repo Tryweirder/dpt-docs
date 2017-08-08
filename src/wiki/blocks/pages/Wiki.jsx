@@ -133,7 +133,7 @@ export default class Wiki extends React.Component {
     }
 
     handleFindBlock = (block) => {
-        this.props.history.pushState(null, `/wiki/libs/${block.library}/${block.name}`);
+        this.props.history.pushState(null, `/docs/libs/${block.library}/${block.name}`);
     }
 
     handleNewBlockClick = () => {
@@ -162,12 +162,12 @@ export default class Wiki extends React.Component {
 
     handleNewBlockSuccess = (response) => {
         this.handleNewBlockFormClose();
-        this.props.history.pushState(null, `/wiki/libs/${response.lib}/${response.block}/`);
+        this.props.history.pushState(null, `/docs/libs/${response.lib}/${response.block}/`);
     }
 
     handleNewLibrarySuccess = (response) => {
         this.handleNewLibraryFormClose();
-        window.location = `/wiki/libs/${response.libname}/`;
+        window.location = `/docs/libs/${response.libname}/`;
     }
 
     render() {
@@ -196,10 +196,10 @@ export default class Wiki extends React.Component {
                         />
                     </Modal>
                     <div className={css(s.content)}>
-                        <Route exact path='/wiki' render={() =>
-                            <Redirect to="/wiki/libs" />
+                        <Route exact path='/docs' render={() =>
+                            <Redirect to="/docs/libs" />
                         } />
-                        <Route path='/wiki/libs/:libName?' component={Libs} />
+                        <Route path='/docs/libs/:libName?' component={Libs} />
                     </div>
                 </div>
             </Page>;
@@ -220,9 +220,9 @@ function Head(props) {
 
     return <div className={css(s.head, isLocal ? s.head_local : s.head_external)}>
         <Head.Group main={true}>
-            <div className={css(s.title)}><Link {...linkMixins} href="/wiki">{props.depotConfig.name || 'Депо'}</Link></div>
+            <div className={css(s.title)}><Link {...linkMixins} href="/docs">{props.depotConfig.name || 'Депо'}</Link></div>
              <ul className={css(s.menu)}>
-                <li className={css(s.menuItem)}><Link {...linkMixins} href='/wiki/libs'>Blocks</Link></li>
+                <li className={css(s.menuItem)}><Link {...linkMixins} href='/docs/libs'>Blocks</Link></li>
                 <li className={css(s.menuItem)}><Link {...linkMixins} external href='/projects'>Projects</Link></li>
             </ul>
             <ul className={css(s.menu)}>

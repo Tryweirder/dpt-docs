@@ -94,7 +94,7 @@ export default class Block extends React.Component {
         let platform = nextPlatform || this.props.match.params.platform || 'desktop';
 
         this.props.history.push(
-            `/wiki/libs/${libName}/${blockName}/${version}/${platform}`,
+            `/docs/libs/${libName}/${blockName}/${version}/${platform}`,
             null
         );
     }
