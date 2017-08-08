@@ -2,7 +2,6 @@ var webpack = require('webpack');
 
 var env = new webpack.DefinePlugin({
     'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
         'BROWSER': JSON.stringify(true)
     }
 });
@@ -17,7 +16,7 @@ module.exports = {
         filename: "[name].js"
     },
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     },
     module: {
         loaders: [{

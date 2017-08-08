@@ -34,7 +34,7 @@
         "less-loader": "^2.2.3",
         "script-loader": "^0.6.1",
         "style-loader": "^0.13.1",
-        "webpack": "^1.12.14"
+        "webpack": "^3.4.1"
     },
     "dependencies": {
         "aphrodite": "^1.2.3",
