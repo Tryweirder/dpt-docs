@@ -76,7 +76,6 @@ export default class Search extends React.Component {
             open: false,
             clickable: false,
             focused: false,
-            loaded: false,
             value: props.value || '',
             blocks: [],
             foundBlocks: [],
@@ -136,13 +135,13 @@ export default class Search extends React.Component {
         setTimeout(() => this.setState({ clickable: false }), 100);
     }
 
-    findBlocks(query, blocks = this.state.blocks) {
+    findBlocks(query) {
         if (query) {
-            return _.sortBy(FuzzAldrin.filter(blocks, query, { key: 'id' }),
+            return _.sortBy(FuzzAldrin.filter(this.props.blocks, query, { key: 'id' }),
                 b => -FuzzAldrin.score(b.id, query)
             );
         } else {
-            return blocks;
+            return this.props.blocks;
         }
     }
 
@@ -199,21 +198,13 @@ export default class Search extends React.Component {
         this.input.blur();
     }
 
-    async open() {
-        this.setState({ focused: true });
-
-        let nextState = {
+    open() {
+        this.setState({
+            focused: true,
             open: true,
-            clickable: true
-        };
-
-        if (!this.state.loaded) {
-            nextState.blocks = await API.blocks.list();
-            nextState.foundBlocks = this.findBlocks(this.state.value, nextState.blocks);
-            nextState.loaded = true;
-        }
-
-        this.setState(nextState);
+            clickable: true,
+            foundBlocks: this.findBlocks(this.state.value)
+        });
     }
 
     render() {

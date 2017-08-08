@@ -116,20 +116,20 @@ export default class Wiki extends React.Component {
         };
     }
 
-    async componentDidMount() {
-        let depotConfig;
-
+    async init() {
         try {
-            depotConfig = await API.depotConfig.get();
+            const [blocks, depotConfig] = await Promise.all([
+                API.blocks.list(),
+                API.depotConfig.get()
+            ]);
+            this.setState({
+                loaded: true,
+                blocks,
+                depotConfig
+            });
         } catch (e) {
-            console.error('Could not load Depot config. Check config.yaml file at the root of your Depot.');
-            return;
+            console.error('Could not load Depot config:\n' + e);
         }
-
-        this.setState({
-            loaded: true,
-            depotConfig
-        });
     }
 
     handleFindBlock = (block) => {
@@ -168,6 +168,10 @@ export default class Wiki extends React.Component {
     handleNewLibrarySuccess = (response) => {
         this.handleNewLibraryFormClose();
         window.location = `/docs/libs/${response.libname}/`;
+    }
+
+    componentDidMount() {
+        return this.init();
     }
 
     render() {
