@@ -27,7 +27,7 @@ const s = StyleSheet.create({
         opacity: 0,
         pointerEvents: 'none',
         zIndex: 100,
-        overflow: 'scroll',
+        overflowY: 'scroll',
         transition: 'opacity 0.1s ease-out, margin-top 0.1s ease-out'
     },
 
