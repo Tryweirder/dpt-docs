@@ -31,10 +31,13 @@ const s = StyleSheet.create({
         transition: 'opacity 0.1s ease-out, margin-top 0.1s ease-out'
     },
 
+    popup_clickable: {
+        pointerEvents: 'auto'
+    },
+
     popup_open: {
         opacity: 1,
         marginTop: 7,
-        pointerEvents: 'auto'
     },
 
     block: {
@@ -248,7 +251,7 @@ export default class Search extends React.Component {
                 style={{ borderRadius: 2 }}
             />
             <div
-                className={css(s.popup, this.state.open && s.popup_open)}
+                className={css(s.popup, this.state.open && s.popup_open, this.state.clickable && s.popup_clickable)}
                 style={{ width: '150%', maxHeight: 315 }}
                 ref={popup => this.popup = popup}
             >

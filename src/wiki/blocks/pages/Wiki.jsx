@@ -132,8 +132,8 @@ export default class Wiki extends React.Component {
         }
     }
 
-    handleFindBlock = (block) => {
-        this.props.history.pushState(null, `/docs/libs/${block.library}/${block.name}`);
+    handleFindBlock = block => {
+        this.props.history.push(`/docs/libs/${block.library}/${block.name}`, null);
     }
 
     handleNewBlockClick = () => {
