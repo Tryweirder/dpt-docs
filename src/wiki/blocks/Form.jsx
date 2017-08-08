@@ -44,9 +44,10 @@ const s = StyleSheet.create({
 });
 
 export default function Form(props) {
-    return <form className={css(s.form)} {...props}>
-        {props.flash && <div {...b('flash') }>{props.flash}</div>}
-        {props.children}
+    const {flash, alignLabels, children, ...other} = props;
+    return <form className={css(s.form)} {...other}>
+        {flash && <div {...b('flash') }>{flash}</div>}
+        {children}
     </form>;
 }
 
