@@ -196,10 +196,8 @@ export default class Wiki extends React.Component {
                         />
                     </Modal>
                     <div className={css(s.content)}>
-                        <Route exact path='/docs' render={() =>
-                            <Redirect to="/docs/libs" />
-                        } />
                         <Route path='/docs/libs/:libName?' component={Libs} />
+                        <Redirect path='/docs' to="/docs/libs" />
                     </div>
                 </div>
             </Page>;
