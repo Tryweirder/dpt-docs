@@ -64,11 +64,11 @@ export default class Example extends React.Component {
                 <iframe {...b('content')} src={src} style={style} ref="example" />
             </div>;
         } else {
-            result = <div {...b(this, mods)} style={style}>
+            result = <div {...b(this, mods)}>
                 <div {...b('preloader')}>
                     <Loading />
                 </div>
-                <div {...b('content')} ref="example" />
+                <div {...b('content') } style={style} ref="example" />
                 <div {...b('code')}>
                     <Cut title="Show the code">
                         <div {...b('code-content')}>
