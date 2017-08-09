@@ -28,6 +28,10 @@ module.exports = {
                 loader: 'style-loader?singleton!css-loader!autoprefixer-loader!less-loader'
             },
             {
+                test: /\.css$/,
+                loader: 'style-loader?singleton!css-loader'
+            },
+            {
                 test: /\.svg$/,
                 loader: 'svg-url-loader?stripdeclarations'
             }
