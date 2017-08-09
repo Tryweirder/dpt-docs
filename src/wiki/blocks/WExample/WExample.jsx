@@ -1,6 +1,7 @@
 import React from 'react';
-
+import Highlight from 'react-highlight';
 import block from 'propmods';
+
 import '../../../vendor/beast';
 
 import Spinner from '../Spinner';
@@ -9,6 +10,7 @@ import Cut from '../Cut';
 if (process.env.BROWSER) {
     var cookie = require('cookie_js').cookie;
     require('./WExample.less');
+    require('./github.css');
 
     document.addEventListener('DOMContentLoaded', maintainScroll);
 }
@@ -72,7 +74,9 @@ export default class Example extends React.Component {
                 <div {...b('code')}>
                     <Cut title="Code">
                         <div {...b('code-content')}>
-                            {this.props.code}
+                            <Highlight className="language-html">
+                                {this.props.code}
+                            </Highlight>
                         </div>
                     </Cut>
                 </div>

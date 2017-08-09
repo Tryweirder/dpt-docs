@@ -62,7 +62,7 @@ body {
         padding-left: 2em;
     }
 
-    code {
+    code:not(.hljs) {
         background-color: #eee;
         font-family: monospace;
         font-size: 13px;
@@ -84,6 +84,14 @@ body {
         margin-bottom: 1em;
         margin-top: 0.5em;
         max-width: 38em;
+    }
+
+    em {
+        font-style: italic;
+    }
+
+    strong {
+        font-weight: bold;
     }
 
     &__content > ul li {

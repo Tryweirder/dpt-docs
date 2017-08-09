@@ -53,7 +53,7 @@
     }
 
     &_loaded {
-        display: inline-block;
+        display: block;
     }
 
     &_loaded &__content {
@@ -71,17 +71,18 @@
     }
 
     &__code {
-        max-width: 563px;
-        overflow-x: scroll;
+        max-width: 100%;
+        // overflow-x: scroll;
         margin-top: 7px;
     }
 
-    &__code-content {
-        white-space: pre;
-        font-family: Monaco, monospace;
-        font-size: 11px;
+    &__code-content code {
+        box-sizing: border-box;
+        font-family: Monaco, monospace !important;
+        font-size: 12px !important;
         line-height: 1.3;
-        background: @wiki-pane-background;
-        padding: 7px;
+        padding: 7px !important;
+        border: none !important;
+        border-radius: 0 !important;
     }
 }
