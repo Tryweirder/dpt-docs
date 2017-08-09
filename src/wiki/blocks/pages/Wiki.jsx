@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite/no-important';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 
 import * as API from '../../lib/api-client';
 
@@ -200,8 +200,10 @@ export default class Wiki extends React.Component {
                         />
                     </Modal>
                     <div className={css(s.content)}>
-                        <Route path='/docs/libs/:libName?' component={Libs} />
-                        <Redirect path='/docs' to="/docs/libs" />
+                        <Switch>
+                            <Route path='/docs/libs/:libName?' component={Libs} />
+                            <Redirect from='/docs' to="/docs/libs" />
+                        </Switch>
                     </div>
                 </div>
             </Page>;
@@ -223,7 +225,7 @@ function Head(props) {
     return <div className={css(s.head, isLocal ? s.head_local : s.head_external)}>
         <Head.Group main={true}>
             <div className={css(s.title)}><Link {...linkMixins} href="/docs">{props.depotConfig.name || 'Депо'}</Link></div>
-             <ul className={css(s.menu)}>
+            <ul className={css(s.menu)}>
                 <li className={css(s.menuItem)}><Link {...linkMixins} href='/docs/libs'>Blocks</Link></li>
                 <li className={css(s.menuItem)}><Link {...linkMixins} external href='/projects'>Projects</Link></li>
             </ul>
@@ -238,9 +240,9 @@ function Head(props) {
                     <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewBlockClick}>Create Block</Link></li>
                     <li className={css(s.menuItem)}><Link {...linkMixins} href="#" onClick={props.onNewLibraryClick}>Create Library</Link></li>
                 </ul>
-            } 
+            }
         </Head.Group>
-         <Head.Group>
+        <Head.Group>
             <ul className={css(s.menu)}>
                 {props.depotConfig.repository &&
                     <li className={css(s.menuItem)}>
@@ -273,7 +275,7 @@ function Head(props) {
                     }
                 </li>
             </ul>
-        </Head.Group> 
+        </Head.Group>
     </div>;
 }
 
