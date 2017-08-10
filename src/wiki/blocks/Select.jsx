@@ -134,7 +134,6 @@ export default class Select extends React.Component {
             <Button
                 checked={this.state.open}
                 size={this.props.size}
-                controlled
                 mode="dropdown"
                 type="button"
                 kind={this.props.kind}
