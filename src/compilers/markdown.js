@@ -48,7 +48,7 @@ handlebars.registerHelper('platformNot', function (...args) {
 
 handlebars.registerHelper('example', function (opts) {
     opts.hash.lang = 'bml';
-    return `:::example${JSON.stringify(opts.hash)}\n<example>\n${opts.fn(this)}</example>:::`;
+    return `:::example${JSON.stringify(opts.hash)}\n<dptexample>\n${opts.fn(this)}</dptexample>:::`;
 });
 
 const DONT_PARSE_CHILDREN = {
