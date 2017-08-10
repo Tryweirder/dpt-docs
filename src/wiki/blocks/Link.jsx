@@ -41,22 +41,41 @@ export default class Link extends React.Component {
     }
 
     render() {
-        let cn = css(s.link, this.props.icon && s.link_hasIcon, this.props.mixClassName);
+        const {
+            mixClassName,
+            activeClassName,
+            external,
+            children,
+            icon,
+            href,
+            ...other
+        } = this.props;
+
+        let cn = css(s.link, icon && s.link_hasIcon, mixClassName);
         let style = {};
-        if (this.props.icon) {
-            style.backgroundImage = 'url(' + this.props.icon + ')';
+        if (icon) {
+            style.backgroundImage = 'url(' + icon + ')';
         }
 
         if (this.isExternal()) {
-            return <a className={cn} {...this.props}>
-                {this.props.icon && <div className={css(s.icon)} style={style} />}
-                {this.props.children}
-            </a>;
+            return (
+                <a className={cn} href={href} {...other}>
+                    {icon && <div className={css(s.icon)} style={style} />}
+                    {children}
+                </a>
+            );
         } else {
-            return <NavLink className={cn} activeClassName={css(s.link_active)} to={this.props.href} {...this.props}>
-                {this.props.icon && <div className={css(s.icon)} style={style} />}
-                {this.props.children}
-            </NavLink>;
+            return (
+                <NavLink
+                    className={cn}
+                    activeClassName={activeClassName || css(s.link_active)}
+                    to={href}
+                    {...other}
+                >
+                    {icon && <div className={css(s.icon)} style={style} />}
+                    {children}
+                </NavLink>
+            );
         }
     }
 }
