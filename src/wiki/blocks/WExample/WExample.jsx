@@ -48,20 +48,23 @@ export default class Example extends React.Component {
     }
 
     render() {
-        let parts = this.props.lang.split('_');
+        const props = this.props;
+        let parts = props.lang.split('_');
         let [lang, modName, modValue = true] = parts;
 
         let mods = modName = {[modName]: modValue};
 
         let style = {
-            width: this.props.width,
-            height: this.props.height
+            width: props.width,
+            height: props.height
         };
 
         let result;
 
-        if (this.props.src) {
-            let src = this.props.src + '?platform=' + this.props.platform;
+        const language = props.lang === 'bml' ? 'language-html' : `language-${props.lang}`;
+
+        if (props.src) {
+            let src = props.src + '?platform=' + props.platform;
             result = <div {...b(this)}>
                 <iframe {...b('content')} src={src} style={style} ref="example" />
             </div>;
@@ -74,8 +77,8 @@ export default class Example extends React.Component {
                 <div {...b('code')}>
                     <Cut title="Code">
                         <div {...b('code-content')}>
-                            <Highlight className="language-html">
-                                {this.props.code}
+                            <Highlight className={language}>
+                                {props.code}
                             </Highlight>
                         </div>
                     </Cut>
