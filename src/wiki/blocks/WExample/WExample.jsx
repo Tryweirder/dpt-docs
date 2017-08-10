@@ -52,7 +52,7 @@ export default class Example extends React.Component {
         let parts = props.lang.split('_');
         let [lang, modName, modValue = true] = parts;
 
-        let mods = modName = {[modName]: modValue};
+        let mods = (modName = { [modName]: modValue });
 
         let style = {
             width: props.width,
@@ -65,25 +65,29 @@ export default class Example extends React.Component {
 
         if (props.src) {
             let src = props.src + '?platform=' + props.platform;
-            result = <div {...b(this)}>
-                <iframe {...b('content')} src={src} style={style} ref="example" />
-            </div>;
+            result = (
+                <div {...b(this)}>
+                    <iframe {...b('content')} src={src} style={style} ref="example" />
+                </div>
+            );
         } else {
-            result = <div {...b(this, mods)}>
-                <div {...b('preloader')}>
-                    <Spinner />
+            result = (
+                <div {...b(this, mods)}>
+                    <div {...b('preloader')}>
+                        <Spinner />
+                    </div>
+                    <div {...b('content')} style={style} ref="example" />
+                    <div {...b('code')}>
+                        <Cut title="Code">
+                            <div {...b('code-content')}>
+                                <Highlight className={language}>
+                                    {props.code}
+                                </Highlight>
+                            </div>
+                        </Cut>
+                    </div>
                 </div>
-                <div {...b('content') } style={style} ref="example" />
-                <div {...b('code')}>
-                    <Cut title="Code">
-                        <div {...b('code-content')}>
-                            <Highlight className={language}>
-                                {props.code}
-                            </Highlight>
-                        </div>
-                    </Cut>
-                </div>
-            </div>;
+            );
         }
 
         return result;
